@@ -1,0 +1,166 @@
+import { TemplateConfig } from '../types/template';
+import vintageBgUrl from '../assets/vintage/vintage_bg_clean.png';
+import welcomeOverlayUrl from '../assets/vintage/welcome_overlay_clean.png';
+import sealStampUrl from '../assets/vintage/seal_stamp.png';
+
+const VINTAGE_AVATAR_PLACEHOLDER = `data:image/svg+xml;utf8,${encodeURIComponent(`
+<svg xmlns="http://www.w3.org/2000/svg" width="571" height="736" viewBox="0 0 571 736">
+  <defs>
+    <linearGradient id="vAvGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#E8E2D5"/>
+      <stop offset="100%" stop-color="#D6CDBF"/>
+    </linearGradient>
+  </defs>
+  <rect width="571" height="736" fill="url(#vAvGrad)"/>
+  
+  <g transform="translate(285, 330)" fill="#A89D8C">
+    <circle cx="0" cy="-60" r="80"/>
+    <path d="M -150 170 C -150 80 -85 60 0 60 C 85 60 150 80 150 170 Z"/>
+  </g>
+
+  <g transform="translate(285, 520)" text-anchor="middle">
+    <rect x="-140" y="-26" width="280" height="52" rx="26" fill="#F4B92B" stroke="#503323" stroke-width="2"/>
+    <text y="7" font-family="'Montserrat', sans-serif" font-size="17" font-weight="800" fill="#503323" letter-spacing="1">
+      + UPLOAD PHOTO
+    </text>
+  </g>
+</svg>
+`)}`;
+
+/**
+ * Enactus Vintage Postage Stamp Template (Season 2027)
+ * Extracted directly from Card2.psd
+ */
+export const VINTAGE_POSTAGE_STAMP_TEMPLATE: TemplateConfig = {
+  id: 'enactus-vintage-postage-stamp-2027',
+  name: 'Enactus Vintage Postage Stamp (Card2 Design)',
+  description: 'Official Enactus Assiut University Vintage Postage Stamp template with parchment texture, perforated stamp window, overlapping distressed red seal, and Welcome ribbon.',
+  version: '2.0.0',
+  isDevPlaceholder: false, // Approved final design from Card2.psd
+  dimensions: {
+    width: 1080,
+    height: 1440,
+    displayAspectRatio: 1080 / 1440, // 0.75 (3:4 ratio)
+  },
+  layers: [
+    // 1. Static Vintage Parchment & Yellow Perforated Stamp Base
+    {
+      id: 'layer-vintage-bg',
+      name: 'Vintage Parchment & Stamp Base',
+      type: 'background',
+      zIndex: 10,
+      source: vintageBgUrl,
+      fallbackColor: '#F4EFE6',
+    },
+
+    // 2. Member Photo Slot (clipped to the exact stamp inner window from Rectangle 1 in Card2.psd)
+    {
+      id: 'layer-member-photo',
+      name: 'Member Portrait Window',
+      type: 'photo',
+      zIndex: 20,
+      slot: {
+        x: 270,
+        y: 288,
+        width: 571,
+        height: 736,
+        clipping: {
+          shape: 'rectangle', // Sharp stamp inner rectangle
+        },
+        placeholderImage: VINTAGE_AVATAR_PLACEHOLDER,
+        defaultZoom: 1.0,
+        minZoom: 0.5,
+        maxZoom: 3.0,
+      },
+    },
+
+    // 3. Foreground Welcome Ribbon Overlay (overlaps top-left corner of the photo)
+    {
+      id: 'layer-welcome-overlay',
+      name: 'Welcome Ribbon Overlay',
+      type: 'overlay',
+      zIndex: 30,
+      source: welcomeOverlayUrl,
+      x: 0,
+      y: 0,
+      width: 1080,
+      height: 1440,
+      opacity: 1.0,
+      blendMode: 'source-over',
+    },
+
+    // 4. Foreground Distressed Red Stamp Seal (overlaps bottom-right corner of the photo)
+    {
+      id: 'layer-seal-stamp',
+      name: 'Distressed Enactus AU Season 2027 Seal',
+      type: 'overlay',
+      zIndex: 35,
+      source: sealStampUrl,
+      x: 668,
+      y: 752,
+      width: 386,
+      height: 343,
+      opacity: 0.86,
+      blendMode: 'source-over',
+    },
+
+    // 5. Member Full Name (Layer 'Yousef Ehab' in Card2.psd)
+    {
+      id: 'layer-member-name',
+      name: 'Member Full Name',
+      type: 'text',
+      zIndex: 40,
+      role: 'name',
+      config: {
+        x: 556,
+        y: 1076,
+        align: 'center',
+        fontFamily: "'Montserrat', sans-serif",
+        fontSize: 70,
+        fontWeight: 800,
+        color: '#FFFFFF',
+        letterSpacing: 1,
+        textTransform: 'capitalize',
+        maxWidth: 640,
+        autoScaleDown: true,
+        minFontSize: 28,
+        shadow: {
+          color: 'rgba(0, 0, 0, 0.25)',
+          blur: 6,
+          offsetX: 0,
+          offsetY: 2,
+        },
+      },
+    },
+
+    // 6. Selected Committee (Layer 'SOCIAL MEDIA' in Card2.psd)
+    {
+      id: 'layer-committee',
+      name: 'Assigned Committee',
+      type: 'text',
+      zIndex: 45,
+      role: 'committee',
+      config: {
+        x: 556,
+        y: 1148,
+        align: 'center',
+        fontFamily: "'Montserrat', sans-serif",
+        fontSize: 33,
+        fontWeight: 800,
+        color: '#503323', // Deep rustic brown from Card2.psd
+        letterSpacing: 2,
+        textTransform: 'uppercase',
+        maxWidth: 640,
+        autoScaleDown: true,
+        minFontSize: 18,
+      },
+    },
+  ],
+  exportSettings: {
+    filenamePrefix: 'Enactus_AU_Season2027_',
+    mimeType: 'image/png',
+    multiplier: 1,
+    quality: 1.0,
+  },
+};
+

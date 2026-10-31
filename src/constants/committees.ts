@@ -19,3 +19,4 @@ export type CommitteeType = typeof APPROVED_COMMITTEES[number];
  * Default selected committee for initial state
  */
 export const DEFAULT_COMMITTEE: CommitteeType = 'IT COMMITTEE';
+

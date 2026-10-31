@@ -83,3 +83,4 @@ export function loadImageFromFile(file: File): Promise<HTMLImageElement> {
     reader.readAsDataURL(file);
   });
 }
+

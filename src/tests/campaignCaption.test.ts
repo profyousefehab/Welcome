@@ -24,3 +24,4 @@ describe('Campaign Caption Generator', () => {
     expect(caption).toContain('transformative impact! 💡✨');
   });
 });
+

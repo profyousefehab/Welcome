@@ -170,3 +170,4 @@ export const DEVELOPMENT_PLACEHOLDER_TEMPLATE: TemplateConfig = {
     quality: 1.0,
   },
 };
+

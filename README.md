@@ -215,3 +215,4 @@ The application will instantly render the final design without touching any UI o
 │   ├── App.tsx                  # Main application orchestrator
 │   └── main.tsx                 # React entry point
 ```
+

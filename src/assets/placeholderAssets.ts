@@ -179,3 +179,4 @@ export const PLACEHOLDER_DEFAULT_AVATAR_SVG = svgToDataUri(`
   </g>
 </svg>
 `);
+

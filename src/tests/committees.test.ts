@@ -21,3 +21,4 @@ describe('Approved Committees List', () => {
     expect(APPROVED_COMMITTEES).toContain(DEFAULT_COMMITTEE);
   });
 });
+

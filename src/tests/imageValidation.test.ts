@@ -25,3 +25,4 @@ describe('Photo Validation Service', () => {
     expect(result.errorMessage).toContain('empty (0 bytes)');
   });
 });
+

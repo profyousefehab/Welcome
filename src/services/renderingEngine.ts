@@ -74,7 +74,7 @@ export function renderCardToCanvas(
   const sortedLayers = [...template.layers].sort((a, b) => a.zIndex - b.zIndex);
 
   for (const layer of sortedLayers) {
-    renderLayer(ctx, layer, userData);
+    renderLayer(ctx, layer, userData, template);
   }
 
   ctx.restore();
@@ -86,11 +86,12 @@ export function renderCardToCanvas(
 function renderLayer(
   ctx: CanvasRenderingContext2D,
   layer: TemplateLayer,
-  userData: UserCardData
+  userData: UserCardData,
+  template: TemplateConfig
 ): void {
   switch (layer.type) {
     case 'background':
-      renderBackgroundLayer(ctx, layer);
+      renderBackgroundLayer(ctx, layer, template);
       break;
     case 'photo':
       renderPhotoLayer(ctx, layer, userData);
@@ -103,7 +104,7 @@ function renderLayer(
       break;
     case 'watermark':
       if (layer.enabled) {
-        renderWatermarkLayer(ctx, layer);
+        renderWatermarkLayer(ctx, layer, template);
       }
       break;
   }
@@ -114,16 +115,17 @@ function renderLayer(
  */
 function renderBackgroundLayer(
   ctx: CanvasRenderingContext2D,
-  layer: Extract<TemplateLayer, { type: 'background' }>
+  layer: Extract<TemplateLayer, { type: 'background' }>,
+  template: TemplateConfig
 ): void {
   if (layer.fallbackColor) {
     ctx.fillStyle = layer.fallbackColor;
-    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.fillRect(0, 0, template.dimensions.width, template.dimensions.height);
   }
 
   if (layer.source && imageCache.has(layer.source)) {
     const img = imageCache.get(layer.source)!;
-    ctx.drawImage(img, 0, 0, 1080, 1350);
+    ctx.drawImage(img, 0, 0, template.dimensions.width, template.dimensions.height);
   }
 }
 
@@ -299,13 +301,16 @@ function renderTextLayer(
  */
 function renderWatermarkLayer(
   ctx: CanvasRenderingContext2D,
-  layer: Extract<TemplateLayer, { type: 'watermark' }>
+  layer: Extract<TemplateLayer, { type: 'watermark' }>,
+  template: TemplateConfig
 ): void {
   ctx.save();
 
+  const width = template.dimensions.width;
+
   // 1. Top banner strip
   ctx.fillStyle = 'rgba(255, 194, 14, 0.95)'; // Enactus Yellow with high opacity
-  ctx.fillRect(0, 0, 1080, 42);
+  ctx.fillRect(0, 0, width, 42);
 
   ctx.fillStyle = '#070F2B';
   ctx.font = '700 15px "Montserrat", sans-serif';
@@ -314,7 +319,7 @@ function renderWatermarkLayer(
   if ('letterSpacing' in ctx) {
     (ctx as unknown as { letterSpacing: string }).letterSpacing = '2px';
   }
-  ctx.fillText(layer.bannerText, 540, 21);
+  ctx.fillText(layer.bannerText, width / 2, 21);
 
   // 2. Corner badge tag in top left
   ctx.save();

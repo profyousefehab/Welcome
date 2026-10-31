@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { DEVELOPMENT_PLACEHOLDER_TEMPLATE } from './templates/placeholderTemplate';
+import { VINTAGE_POSTAGE_STAMP_TEMPLATE } from './templates/vintagePostageTemplate';
 import { UserCardData } from './types/template';
-import { DEFAULT_COMMITTEE } from './constants/committees';
 import { exportHighResolutionPng } from './services/renderingEngine';
 
 import { CardPreview } from './components/CardPreview';
@@ -12,9 +11,11 @@ import { CaptionBox } from './components/CaptionBox';
 import { ArchitectureHandoverGuide } from './components/ArchitectureHandoverGuide';
 
 import confetti from 'canvas-confetti';
-import { ShieldAlert } from 'lucide-react';
+import { Stamp, CheckCircle2 } from 'lucide-react';
 
 export const App: React.FC = () => {
+  const activeTemplate = VINTAGE_POSTAGE_STAMP_TEMPLATE;
+
   // Application State
   const [userData, setUserData] = useState<UserCardData>({
     photoImage: null,
@@ -24,8 +25,8 @@ export const App: React.FC = () => {
       y: 0,
       zoom: 1.0,
     },
-    fullName: 'Youssef Nabil',
-    committee: DEFAULT_COMMITTEE,
+    fullName: 'Yousef Ehab',
+    committee: 'SOCIAL MEDIA COMMITTEE',
   });
 
   const [isExporting, setIsExporting] = useState(false);
@@ -77,7 +78,7 @@ export const App: React.FC = () => {
 
     try {
       const { blob, filename } = await exportHighResolutionPng(
-        DEVELOPMENT_PLACEHOLDER_TEMPLATE,
+        activeTemplate,
         userData
       );
 
@@ -133,15 +134,18 @@ export const App: React.FC = () => {
 
       {/* Main Content Area */}
       <main className="app-main">
-        {/* Development Placeholder Alert Banner */}
-        <div className="banner-dev-notice" role="alert">
+        {/* Template Status Banner */}
+        <div className="banner-dev-notice" style={{ borderLeftColor: '#F4B92B' }} role="status">
           <div className="banner-dev-notice-text">
-            <ShieldAlert size={18} style={{ color: 'var(--color-gold)', flexShrink: 0 }} />
+            <Stamp size={18} style={{ color: '#F4B92B', flexShrink: 0 }} />
             <span>
-              <strong>Development Placeholder Active:</strong> Candidate artwork selection (Black &amp; Gold vs. Vintage Postage Stamp) is pending. Rendering engine is decoupled and prepared for Photoshop export handover.
+              <strong>Active Template:</strong> Enactus Vintage Postage Stamp (Season 2027 &bull; Assiut University) integrated from <code>Card2.psd</code>.
             </span>
           </div>
-          <span className="banner-dev-badge">DECISION PENDING</span>
+          <span className="banner-dev-badge" style={{ background: '#10B981', color: '#FFFFFF' }}>
+            <CheckCircle2 size={12} style={{ display: 'inline', verticalAlign: '-1px', marginRight: '3px' }} />
+            CARD2 TEMPLATE LOADED
+          </span>
         </div>
 
         {/* Two-Column Responsive Layout */}
@@ -149,7 +153,7 @@ export const App: React.FC = () => {
           {/* Left Column: Live Card Preview (Sticky on Desktop) */}
           <section className="preview-column" aria-label="Card Live Preview">
             <CardPreview
-              template={DEVELOPMENT_PLACEHOLDER_TEMPLATE}
+              template={activeTemplate}
               userData={userData}
               onUpdatePosition={handleUpdatePosition}
               isExporting={isExporting}

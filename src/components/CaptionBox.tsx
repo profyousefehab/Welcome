@@ -72,3 +72,4 @@ export const CaptionBox: React.FC<CaptionBoxProps> = ({ committee }) => {
     </div>
   );
 };
+

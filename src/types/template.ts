@@ -142,3 +142,4 @@ export interface UserCardData {
   fullName: string;
   committee: string;
 }
+
