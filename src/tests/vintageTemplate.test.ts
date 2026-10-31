@@ -57,3 +57,4 @@ describe('Vintage Postage Stamp Template (Card2.psd)', () => {
     }
   });
 });
+

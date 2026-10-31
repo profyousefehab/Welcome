@@ -1,6 +1,6 @@
 import React, { useState, useRef, DragEvent, ChangeEvent } from 'react';
 import { validateUploadedPhoto } from '../services/imageValidation';
-import { UploadCloud, CheckCircle2, AlertTriangle, Trash2, Image as ImageIcon } from 'lucide-react';
+import { UploadCloud, CheckCircle2, AlertTriangle, Trash2 } from 'lucide-react';
 
 interface PhotoUploaderProps {
   hasPhoto: boolean;
@@ -82,15 +82,15 @@ export const PhotoUploader: React.FC<PhotoUploaderProps> = ({
     <div className="control-section photo-uploader-section">
       <div className="section-header">
         <label className="section-label">
-          <ImageIcon size={18} className="section-icon" />
-          <span>Member Photo</span>
+          <span className="step-badge">1</span>
+          <span>Upload Your Photo</span>
         </label>
         {hasPhoto && (
           <button
             type="button"
             className="btn-text-danger"
             onClick={handleRemove}
-            title="Remove uploaded photo"
+            title="Remove photo"
           >
             <Trash2 size={14} />
             <span>Remove</span>
@@ -119,10 +119,10 @@ export const PhotoUploader: React.FC<PhotoUploaderProps> = ({
           </div>
           <div className="dropzone-text">
             <p className="dropzone-title">
-              {hasPhoto ? 'Click or drop to replace photo' : 'Upload portrait photo'}
+              {hasPhoto ? 'Click to change photo' : 'Choose a photo or drag & drop here'}
             </p>
             <p className="dropzone-hint">
-              JPG, PNG, or WebP &bull; Max 12 MB &bull; High resolution recommended
+              JPG or PNG &bull; Clear portrait photo works best
             </p>
           </div>
         </div>
@@ -131,7 +131,7 @@ export const PhotoUploader: React.FC<PhotoUploaderProps> = ({
       {isValidating && (
         <div className="status-message validating">
           <div className="spinner-mini" />
-          <span>Validating image resolution and format...</span>
+          <span>Processing photo...</span>
         </div>
       )}
 
@@ -145,7 +145,7 @@ export const PhotoUploader: React.FC<PhotoUploaderProps> = ({
       {successInfo && !errorMessage && (
         <div className="status-message success">
           <CheckCircle2 size={16} />
-          <span>{successInfo}</span>
+          <span>Photo loaded! Drag on the card preview to frame your face.</span>
         </div>
       )}
     </div>

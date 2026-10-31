@@ -25,37 +25,36 @@ export const FormControls: React.FC<FormControlsProps> = ({
     <div className="control-section form-controls-section">
       <div className="section-header">
         <label className="section-label">
-          <User size={18} className="section-icon" />
-          <span>Member Details</span>
+          <span className="step-badge">2</span>
+          <span>Your Details</span>
         </label>
-        <span className="fixed-design-badge">Design Fixed</span>
       </div>
 
       {/* Full Name Input */}
       <div className="input-group">
         <label htmlFor="fullNameInput" className="input-label">
-          Full Name
+          <User size={15} className="inline-icon" />
+          <span>Full Name</span>
         </label>
         <div className="input-wrapper">
           <input
             id="fullNameInput"
             type="text"
             className="text-input"
-            placeholder="Enter member's full name (e.g. Youssef Nabil)"
+            placeholder="e.g. Yousef Ehab"
             value={fullName}
             maxLength={40}
             onChange={(e) => onFullNameChange(e.target.value)}
           />
           <span className="char-counter">{fullName.length}/40</span>
         </div>
-        <p className="input-help">Will be formatted in uppercase on the card automatically.</p>
       </div>
 
       {/* Committee Dropdown */}
       <div className="input-group">
         <label htmlFor="committeeSelect" className="input-label">
           <Users size={15} className="inline-icon" />
-          <span>Assigned Committee</span>
+          <span>Your Committee</span>
         </label>
         <div className="select-wrapper">
           <select
@@ -71,10 +70,9 @@ export const FormControls: React.FC<FormControlsProps> = ({
             ))}
           </select>
         </div>
-        <p className="input-help">Select from the 7 officially recognized Enactus committees.</p>
       </div>
 
-      {/* High-Resolution PNG Export CTA */}
+      {/* Download Action CTA */}
       <div className="export-action-block">
         <button
           type="button"
@@ -85,24 +83,21 @@ export const FormControls: React.FC<FormControlsProps> = ({
           {isExporting ? (
             <>
               <div className="spinner-mini" />
-              <span>Generating High-Res PNG...</span>
+              <span>Generating your card...</span>
             </>
           ) : hasExported ? (
             <>
               <CheckCircle size={20} />
-              <span>Download Ready (Click to re-download)</span>
+              <span>Downloaded! Click to download again</span>
             </>
           ) : (
             <>
               <Download size={20} />
-              <span>Download High-Resolution PNG</span>
+              <span>Download Membership Card</span>
               <Sparkles size={16} className="sparkle-icon" />
             </>
           )}
         </button>
-        <p className="export-spec-note">
-          Outputs pixel-perfect 1080 × 1350 PNG with full transparent overlays and auto-scaled typography.
-        </p>
       </div>
     </div>
   );

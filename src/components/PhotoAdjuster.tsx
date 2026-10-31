@@ -49,30 +49,27 @@ export const PhotoAdjuster: React.FC<PhotoAdjusterProps> = ({
     });
   };
 
+  if (disabled) {
+    return null;
+  }
+
   return (
-    <div className={`control-section photo-adjuster-section ${disabled ? 'is-disabled' : ''}`}>
+    <div className="control-section photo-adjuster-section">
       <div className="section-header">
         <label className="section-label">
-          <Sliders size={18} className="section-icon" />
-          <span>Position & Zoom Controls</span>
+          <Sliders size={16} className="section-icon" />
+          <span>Adjust Photo Framing</span>
         </label>
         <button
           type="button"
           className="btn-text-secondary"
           onClick={handleReset}
-          disabled={disabled}
           title="Reset zoom and position"
         >
           <RotateCcw size={13} />
           <span>Reset</span>
         </button>
       </div>
-
-      {disabled && (
-        <p className="section-disabled-note">
-          Upload a photo first to enable zoom and alignment adjustments.
-        </p>
-      )}
 
       {/* Zoom Slider */}
       <div className="control-field">

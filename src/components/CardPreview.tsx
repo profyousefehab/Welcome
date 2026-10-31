@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { TemplateConfig, UserCardData } from '../types/template';
 import { renderCardToCanvas, preloadTemplateAssets } from '../services/renderingEngine';
-import { Move, AlertCircle } from 'lucide-react';
+import { Move } from 'lucide-react';
 
 interface CardPreviewProps {
   template: TemplateConfig;
@@ -90,14 +90,6 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
 
   return (
     <div className="card-preview-wrapper" ref={containerRef}>
-      {/* Dev Watermark Status Tag */}
-      {template.isDevPlaceholder && (
-        <div className="dev-placeholder-notice" role="status">
-          <AlertCircle size={15} />
-          <span>Dev Placeholder Template &bull; Final Photoshop Artwork Pending</span>
-        </div>
-      )}
-
       {/* Canvas Container with aspect ratio preservation */}
       <div 
         className={`preview-canvas-container ${isDragging ? 'is-dragging' : ''} ${userData.photoImage ? 'has-photo' : ''}`}
@@ -118,7 +110,7 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
         {userData.photoImage && !isDragging && (
           <div className="canvas-drag-hint">
             <Move size={14} />
-            <span>Drag photo to adjust</span>
+            <span>Drag photo to adjust position</span>
           </div>
         )}
 
@@ -126,22 +118,9 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
         {isExporting && (
           <div className="canvas-export-overlay">
             <div className="spinner" />
-            <p>Rendering High-Resolution PNG (1080×1350)...</p>
+            <p>Generating your official card...</p>
           </div>
         )}
-      </div>
-
-      {/* Card Info Details */}
-      <div className="card-meta-bar">
-        <span className="meta-item">
-          <strong>Format:</strong> 1080 × 1350 (4:5 Portrait)
-        </span>
-        <span className="meta-item">
-          <strong>Engine:</strong> Multi-Layer Vector/Raster
-        </span>
-        <span className="meta-item badge-active">
-          <strong>Layers:</strong> {template.layers.length} Active
-        </span>
       </div>
     </div>
   );

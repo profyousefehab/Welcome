@@ -8,10 +8,9 @@ import { PhotoUploader } from './components/PhotoUploader';
 import { PhotoAdjuster } from './components/PhotoAdjuster';
 import { FormControls } from './components/FormControls';
 import { CaptionBox } from './components/CaptionBox';
-import { ArchitectureHandoverGuide } from './components/ArchitectureHandoverGuide';
 
 import confetti from 'canvas-confetti';
-import { Stamp, CheckCircle2 } from 'lucide-react';
+import enactusLogo from './assets/enactus_logo.png';
 
 export const App: React.FC = () => {
   const activeTemplate = VINTAGE_POSTAGE_STAMP_TEMPLATE;
@@ -100,14 +99,14 @@ export const App: React.FC = () => {
           particleCount: 80,
           spread: 70,
           origin: { y: 0.6 },
-          colors: ['#FFC20E', '#FFFFFF', '#0B192C', '#38BDF8'],
+          colors: ['#F4B92B', '#FFFFFF', '#0B192C', '#DA251C'],
         });
       } catch {
         // Confetti fallback
       }
     } catch (err) {
       console.error('Export error:', err);
-      alert('An error occurred while generating high-resolution PNG. Please try again.');
+      alert('An error occurred while generating your card. Please try again.');
     } finally {
       setIsExporting(false);
     }
@@ -119,33 +118,36 @@ export const App: React.FC = () => {
       <header className="app-header">
         <div className="header-container">
           <div className="brand-badge">
-            <div className="brand-logo-icon">E</div>
+            <img src={enactusLogo} alt="Enactus Assiut University" className="enactus-header-logo" />
             <div className="brand-title-wrap">
-              <span className="brand-title">Enactus Welcome</span>
-              <span className="brand-tagline">Membership Card Generator</span>
+              <span className="brand-title">Welcome to our family</span>
+              <span className="brand-tagline">Official Membership Card</span>
             </div>
           </div>
-
-          <div className="header-actions">
-            <ArchitectureHandoverGuide />
+          <div className="header-season-tag">
+            <span>SEASON 2027</span>
           </div>
         </div>
       </header>
 
       {/* Main Content Area */}
       <main className="app-main">
-        {/* Template Status Banner */}
-        <div className="banner-dev-notice" style={{ borderLeftColor: '#F4B92B' }} role="status">
-          <div className="banner-dev-notice-text">
-            <Stamp size={18} style={{ color: '#F4B92B', flexShrink: 0 }} />
-            <span>
-              <strong>Active Template:</strong> Enactus Vintage Postage Stamp (Season 2027 &bull; Assiut University) integrated from <code>Card2.psd</code>.
-            </span>
+        {/* Simple 3-Step Member Guide Bar */}
+        <div className="member-steps-guide">
+          <div className="step-pill">
+            <span className="step-pill-number">1</span>
+            <span className="step-pill-title">Upload Photo</span>
           </div>
-          <span className="banner-dev-badge" style={{ background: '#10B981', color: '#FFFFFF' }}>
-            <CheckCircle2 size={12} style={{ display: 'inline', verticalAlign: '-1px', marginRight: '3px' }} />
-            CARD2 TEMPLATE LOADED
-          </span>
+          <div className="step-pill-line" />
+          <div className="step-pill">
+            <span className="step-pill-number">2</span>
+            <span className="step-pill-title">Enter Details</span>
+          </div>
+          <div className="step-pill-line" />
+          <div className="step-pill">
+            <span className="step-pill-number">3</span>
+            <span className="step-pill-title">Download &amp; Share</span>
+          </div>
         </div>
 
         {/* Two-Column Responsive Layout */}
@@ -162,21 +164,21 @@ export const App: React.FC = () => {
 
           {/* Right Column: Member Controls and Customization Form */}
           <section className="controls-column" aria-label="Card Editor Controls">
-            {/* 1. Member Photo Upload & Client-Side Validation */}
+            {/* Step 1: Member Photo Upload */}
             <PhotoUploader
               hasPhoto={!!userData.photoImage}
               onPhotoLoaded={handlePhotoLoaded}
               onPhotoRemoved={handlePhotoRemoved}
             />
 
-            {/* 2. Photo Position & Zoom Controls */}
+            {/* Photo Position & Zoom Controls (Visible when photo is uploaded) */}
             <PhotoAdjuster
               position={userData.photoPosition}
               onUpdatePosition={handleUpdatePosition}
               disabled={!userData.photoImage}
             />
 
-            {/* 3. Full Name & Committee Dropdown + PNG Export CTA */}
+            {/* Step 2: Full Name & Committee Dropdown + Download CTA */}
             <FormControls
               fullName={userData.fullName}
               committee={userData.committee}
@@ -187,7 +189,7 @@ export const App: React.FC = () => {
               hasExported={hasExported}
             />
 
-            {/* 4. Fixed Campaign Caption with Dynamic Committee Substitution */}
+            {/* Step 3: Social Media Announcement Caption */}
             <CaptionBox committee={userData.committee} />
           </section>
         </div>
@@ -195,11 +197,9 @@ export const App: React.FC = () => {
 
       {/* App Footer */}
       <footer className="app-footer">
-        <div className="footer-left">
-          <span>Enactus Welcome Card Generator &bull; Template Engine v1.0.0-dev</span>
-        </div>
-        <div className="footer-right">
-          <span>All design assets fixed &bull; Candidate designs: Black &amp; Gold / Vintage Postage Stamp</span>
+        <div className="footer-container">
+          <img src={enactusLogo} alt="Enactus Assiut University" className="footer-logo" />
+          <span>Enactus Assiut University &bull; Season 2027</span>
         </div>
       </footer>
     </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { generateCampaignCaption } from '../constants/campaignCaption';
-import { Copy, Check, MessageSquareText, Share2 } from 'lucide-react';
+import { Copy, Check, Share2 } from 'lucide-react';
 
 interface CaptionBoxProps {
   committee: string;
@@ -32,14 +32,13 @@ export const CaptionBox: React.FC<CaptionBoxProps> = ({ committee }) => {
     <div className="control-section caption-section">
       <div className="section-header">
         <label className="section-label">
-          <MessageSquareText size={18} className="section-icon" />
-          <span>Official Campaign Caption</span>
+          <span className="step-badge">3</span>
+          <span>Social Media Caption</span>
         </label>
-        <span className="fixed-design-badge">Auto-Synced</span>
       </div>
 
       <p className="caption-instruction">
-        This campaign announcement text is standardized for all members. Your assigned committee is automatically inserted below.
+        Ready to share with your card on LinkedIn, Facebook, and Instagram:
       </p>
 
       <div className="caption-display-box">
@@ -55,18 +54,18 @@ export const CaptionBox: React.FC<CaptionBoxProps> = ({ committee }) => {
           {copied ? (
             <>
               <Check size={18} />
-              <span>Copied to Clipboard!</span>
+              <span>Copied!</span>
             </>
           ) : (
             <>
               <Copy size={18} />
-              <span>Copy Campaign Caption</span>
+              <span>Copy Caption</span>
             </>
           )}
         </button>
         <div className="caption-tags-hint">
           <Share2 size={13} />
-          <span>Ready for LinkedIn, Facebook & Instagram</span>
+          <span>Includes your committee hashtags</span>
         </div>
       </div>
     </div>
