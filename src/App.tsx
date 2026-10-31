@@ -10,7 +10,7 @@ import { FormControls } from './components/FormControls';
 import { CaptionBox } from './components/CaptionBox';
 
 import confetti from 'canvas-confetti';
-import enactusLogo from './assets/enactus_logo.png';
+import logoEnactusAu from './assets/logoEnactusAu_web.png';
 
 export const App: React.FC = () => {
   const activeTemplate = VINTAGE_POSTAGE_STAMP_TEMPLATE;
@@ -118,7 +118,7 @@ export const App: React.FC = () => {
       <header className="app-header">
         <div className="header-container">
           <div className="brand-badge">
-            <img src={enactusLogo} alt="Enactus Assiut University" className="enactus-header-logo" />
+            <img src={logoEnactusAu} alt="Enactus Assiut University" className="enactus-header-logo" />
             <div className="brand-title-wrap">
               <span className="brand-title">Welcome to our family</span>
               <span className="brand-tagline">Official Membership Card</span>
@@ -198,7 +198,7 @@ export const App: React.FC = () => {
       {/* App Footer */}
       <footer className="app-footer">
         <div className="footer-container">
-          <img src={enactusLogo} alt="Enactus Assiut University" className="footer-logo" />
+          <img src={logoEnactusAu} alt="Enactus Assiut University" className="footer-logo" />
           <span>Enactus Assiut University &bull; Season 2027</span>
         </div>
       </footer>
