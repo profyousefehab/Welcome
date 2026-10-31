@@ -28,6 +28,7 @@ export interface TextTypographyConfig {
   y: number;
   align: 'left' | 'center' | 'right';
   fontFamily: string;
+  fontStyle?: 'normal' | 'italic' | 'oblique';
   fontSize: number;
   fontWeight: string | number;
   color: string;
@@ -140,6 +141,7 @@ export interface UserCardData {
     zoom: number; // scale multiplier, 1.0 = fit
   };
   fullName: string;
+  nameFontSize?: number;
   committee: string;
 }
 

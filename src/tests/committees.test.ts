@@ -4,9 +4,9 @@ import { APPROVED_COMMITTEES, DEFAULT_COMMITTEE } from '../constants/committees'
 describe('Approved Committees List', () => {
   it('contains exactly the 7 approved committees', () => {
     const expected = [
-      'SOCIAL MEDIA COMMITTEE',
-      'PHOTO & VIDEO COMMITTEE',
-      'IT COMMITTEE',
+      'SOCIAL MEDIA',
+      'PHOTO & VIDEO',
+      'IT',
       'HUMAN RESOURCES',
       'PUBLIC RELATIONS',
       'PRESENTATION',

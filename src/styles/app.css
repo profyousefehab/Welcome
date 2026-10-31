@@ -2,6 +2,104 @@
    Enactus Membership Card Generator - Clean Production Stylesheet
    ========================================================================== */
 
+/* Custom Typography Suite - Neulis Font Family */
+@font-face {
+  font-family: 'Neulis';
+  src: url('/Neulis-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neulis';
+  src: url('/Neulis-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neulis';
+  src: url('/Neulis-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neulis';
+  src: url('/Neulis-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neulis';
+  src: url('/Neulis-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neulis';
+  src: url('/Neulis-ExtraBold.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neulis';
+  src: url('/Neulis-Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Italic Variants */
+@font-face {
+  font-family: 'Neulis';
+  src: url('/Neulis-Italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neulis';
+  src: url('/Neulis-MediumItalic.otf') format('opentype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neulis';
+  src: url('/Neulis-SemiBoldItalic.otf') format('opentype');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neulis';
+  src: url('/Neulis-BoldItalic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neulis';
+  src: url('/Neulis-ExtraBoldItalic.otf') format('opentype');
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
 :root {
   --color-bg-dark: #070F2B;
   --color-bg-surface: #0B192C;
@@ -22,8 +120,8 @@
   --color-success: #10B981;
   --color-error: #EF4444;
   
-  --font-family-base: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-family-display: 'Montserrat', sans-serif;
+  --font-family-base: 'Neulis', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-display: 'Neulis', sans-serif;
   
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -51,10 +149,6 @@ body {
   min-height: 100vh;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  background-image: 
-    radial-gradient(circle at 10% 15%, rgba(244, 185, 43, 0.06) 0%, transparent 40%),
-    radial-gradient(circle at 90% 85%, rgba(27, 26, 85, 0.5) 0%, transparent 50%);
-  background-attachment: fixed;
 }
 
 /* App Header */
@@ -614,6 +708,93 @@ body {
   pointer-events: none;
 }
 
+/* Name Font Size Adjuster */
+.font-size-adjuster {
+  margin-top: 0.65rem;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.85rem;
+}
+
+.font-size-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.45rem;
+  font-size: 0.8rem;
+}
+
+.font-size-label {
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 600;
+}
+
+.font-size-value {
+  color: var(--color-gold-warm);
+  font-weight: 700;
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+  background: rgba(244, 185, 43, 0.12);
+  padding: 0.12rem 0.5rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(244, 185, 43, 0.25);
+}
+
+.font-size-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.font-size-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-input);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+
+.font-size-btn:hover {
+  border-color: var(--color-gold-warm);
+  color: var(--color-gold-warm);
+  background: var(--color-bg-card);
+}
+
+.font-size-slider {
+  flex: 1;
+  appearance: none;
+  background: var(--color-bg-input);
+  height: 6px;
+  border-radius: 3px;
+  outline: none;
+}
+
+.font-size-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-gold-warm);
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(244, 185, 43, 0.5);
+  transition: var(--transition);
+}
+
+.font-size-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
 .select-wrapper {
   position: relative;
 }
@@ -691,10 +872,6 @@ body {
   background: linear-gradient(135deg, #10B981 0%, #059669 100%);
   color: #FFFFFF;
   box-shadow: 0 8px 24px rgba(16, 185, 129, 0.35);
-}
-
-.sparkle-icon {
-  animation: pulse 2s infinite ease-in-out;
 }
 
 /* Caption Section */
@@ -815,9 +992,4 @@ body {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(0.9); }
 }

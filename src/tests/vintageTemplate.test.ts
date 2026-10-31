@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { VINTAGE_POSTAGE_STAMP_TEMPLATE } from '../templates/vintagePostageTemplate';
+import { renderCardToCanvas } from '../services/renderingEngine';
 
 describe('Vintage Postage Stamp Template (Card2.psd)', () => {
   it('has 1080x1440 canvas dimensions matching Card2.psd', () => {
@@ -22,11 +23,11 @@ describe('Vintage Postage Stamp Template (Card2.psd)', () => {
     }
   });
 
-  it('contains both overlapping overlays (welcome ribbon and circular stamp)', () => {
+  it('contains overlapping overlays (welcome ribbon, circular stamp, committee script)', () => {
     const overlays = VINTAGE_POSTAGE_STAMP_TEMPLATE.layers.filter(
       (l) => l.type === 'overlay'
     );
-    expect(overlays.length).toBe(2);
+    expect(overlays.length).toBe(3);
 
     const stamp = overlays.find((o) => o.name.includes('Seal'));
     expect(stamp).toBeDefined();
@@ -34,9 +35,16 @@ describe('Vintage Postage Stamp Template (Card2.psd)', () => {
       expect(stamp.x).toBe(668);
       expect(stamp.y).toBe(752);
     }
+
+    const committeeOverlay = overlays.find((o) => o.id === 'layer-committee-overlay');
+    expect(committeeOverlay).toBeDefined();
+    if (committeeOverlay && committeeOverlay.type === 'overlay') {
+      expect(committeeOverlay.x).toBe(484);
+      expect(committeeOverlay.y).toBe(1133);
+    }
   });
 
-  it('has name and committee text layers configured', () => {
+  it('has name and committee text layers configured with Neulis typography', () => {
     const textLayers = VINTAGE_POSTAGE_STAMP_TEMPLATE.layers.filter(
       (l) => l.type === 'text'
     );
@@ -49,12 +57,64 @@ describe('Vintage Postage Stamp Template (Card2.psd)', () => {
     if (nameLayer && nameLayer.type === 'text') {
       expect(nameLayer.config.color).toBe('#FFFFFF');
       expect(nameLayer.config.align).toBe('center');
+      expect(nameLayer.config.fontFamily).toContain('Neulis-ExtraBoldItalic');
+      expect(nameLayer.config.fontStyle).toBe('italic');
     }
 
     if (committeeLayer && committeeLayer.type === 'text') {
       expect(committeeLayer.config.color).toBe('#503323');
       expect(committeeLayer.config.align).toBe('center');
+      expect(committeeLayer.config.fontFamily).toContain('Neulis-MediumItalic');
+      expect(committeeLayer.config.fontStyle).toBe('italic');
     }
+  });
+
+  it('renders custom nameFontSize when specified in userData', () => {
+    const assignedFonts: string[] = [];
+    const mockCtx = {
+      save: () => {},
+      restore: () => {},
+      clearRect: () => {},
+      scale: () => {},
+      fillRect: () => {},
+      beginPath: () => {},
+      closePath: () => {},
+      clip: () => {},
+      rect: () => {},
+      measureText: () => ({ width: 100 }),
+      fillText: () => {},
+      strokeText: () => {},
+      drawImage: () => {},
+      set font(value: string) {
+        assignedFonts.push(value);
+      },
+      get font() {
+        return assignedFonts[assignedFonts.length - 1] || '';
+      },
+    };
+
+    const mockCanvas = {
+      getContext: () => mockCtx,
+      width: 0,
+      height: 0,
+    } as unknown as HTMLCanvasElement;
+
+    renderCardToCanvas(
+      mockCanvas,
+      VINTAGE_POSTAGE_STAMP_TEMPLATE,
+      {
+        fullName: 'Test Student',
+        nameFontSize: 46,
+        committee: 'SOCIAL MEDIA',
+        photoImage: null,
+        photoUrl: null,
+        photoPosition: { x: 0, y: 0, zoom: 1 },
+      },
+      1.0
+    );
+
+    // Name text layer should have used the custom 46px font size
+    expect(assignedFonts.some((f) => f.includes('46px'))).toBe(true);
   });
 });
 

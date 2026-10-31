@@ -1,21 +1,18 @@
 /**
- * Fixed Campaign Caption
+ * Official Campaign Announcement Copy
  * 
- * The copy text is strictly fixed for all members, with only the selected committee
- * automatically substituted in place.
+ * Standardized announcement text for all incoming members.
+ * Free of emojis and excessive hype.
  */
 
 export function generateCampaignCaption(committee: string): string {
   const committeeName = committee?.trim() || 'ENACTUS TEAM';
   
-  return `🌟 New Journey, Greater Purpose! 🌟
+  return `I am pleased to announce that I have officially joined Enactus Assiut University as a member of the ${committeeName}.
 
-I am thrilled to announce that I have officially joined Enactus as a member of the ${committeeName}! 🚀
+Together with an inspiring team of changemakers, we are dedicated to creating positive social and economic impact through innovation, entrepreneurial action, and community empowerment.
 
-Enactus is all about creating positive change through entrepreneurial action, innovation, and teamwork. I cannot wait to collaborate with our passionate leaders and drive meaningful impact in our community.
+Looking forward to a productive season of leadership and meaningful initiatives.
 
-Here's to a season of leadership, innovation, and transformative impact! 💡✨
-
-#WeAreEnactus #Enactus #Leadership #SocialImpact #Innovation #CommunityEmpowerment`;
+#WeAreEnactus #EnactusEgypt #EnactusAU #Leadership #SocialImpact #CommunityEmpowerment`;
 }
-

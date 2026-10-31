@@ -8,8 +8,6 @@ import { PhotoUploader } from './components/PhotoUploader';
 import { PhotoAdjuster } from './components/PhotoAdjuster';
 import { FormControls } from './components/FormControls';
 import { CaptionBox } from './components/CaptionBox';
-
-import confetti from 'canvas-confetti';
 import logoEnactusAu from './assets/logoEnactusAu_web.png';
 
 export const App: React.FC = () => {
@@ -25,7 +23,8 @@ export const App: React.FC = () => {
       zoom: 1.0,
     },
     fullName: 'Yousef Ehab',
-    committee: 'SOCIAL MEDIA COMMITTEE',
+    nameFontSize: 54,
+    committee: 'SOCIAL MEDIA',
   });
 
   const [isExporting, setIsExporting] = useState(false);
@@ -64,6 +63,13 @@ export const App: React.FC = () => {
     }));
   };
 
+  const handleNameFontSizeChange = (size: number) => {
+    setUserData((prev) => ({
+      ...prev,
+      nameFontSize: size,
+    }));
+  };
+
   const handleCommitteeChange = (committee: string) => {
     setUserData((prev) => ({
       ...prev,
@@ -92,18 +98,6 @@ export const App: React.FC = () => {
       URL.revokeObjectURL(downloadUrl);
 
       setHasExported(true);
-
-      // Celebratory Confetti!
-      try {
-        confetti({
-          particleCount: 80,
-          spread: 70,
-          origin: { y: 0.6 },
-          colors: ['#F4B92B', '#FFFFFF', '#0B192C', '#DA251C'],
-        });
-      } catch {
-        // Confetti fallback
-      }
     } catch (err) {
       console.error('Export error:', err);
       alert('An error occurred while generating your card. Please try again.');
@@ -181,8 +175,10 @@ export const App: React.FC = () => {
             {/* Step 2: Full Name & Committee Dropdown + Download CTA */}
             <FormControls
               fullName={userData.fullName}
+              nameFontSize={userData.nameFontSize}
               committee={userData.committee}
               onFullNameChange={handleFullNameChange}
+              onNameFontSizeChange={handleNameFontSizeChange}
               onCommitteeChange={handleCommitteeChange}
               onExportPng={handleExportPng}
               isExporting={isExporting}

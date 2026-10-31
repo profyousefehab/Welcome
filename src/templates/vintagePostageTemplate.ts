@@ -2,6 +2,7 @@ import { TemplateConfig } from '../types/template';
 import vintageBgUrl from '../assets/vintage/vintage_bg_clean.png';
 import welcomeOverlayUrl from '../assets/vintage/welcome_overlay_clean.png';
 import sealStampUrl from '../assets/vintage/seal_stamp.png';
+import committeeScriptUrl from '../assets/vintage/committee_script.png';
 
 const VINTAGE_AVATAR_PLACEHOLDER = `data:image/svg+xml;utf8,${encodeURIComponent(`
 <svg xmlns="http://www.w3.org/2000/svg" width="571" height="736" viewBox="0 0 571 736">
@@ -115,15 +116,16 @@ export const VINTAGE_POSTAGE_STAMP_TEMPLATE: TemplateConfig = {
         x: 556,
         y: 1076,
         align: 'center',
-        fontFamily: "'Montserrat', sans-serif",
-        fontSize: 70,
+        fontFamily: "'Neulis-ExtraBoldItalic', 'Neulis', sans-serif",
+        fontStyle: 'italic',
+        fontSize: 54, // Balanced default size, editable by student
         fontWeight: 800,
         color: '#FFFFFF',
         letterSpacing: 1,
         textTransform: 'capitalize',
         maxWidth: 640,
         autoScaleDown: true,
-        minFontSize: 28,
+        minFontSize: 24,
         shadow: {
           color: 'rgba(0, 0, 0, 0.25)',
           blur: 6,
@@ -144,16 +146,32 @@ export const VINTAGE_POSTAGE_STAMP_TEMPLATE: TemplateConfig = {
         x: 556,
         y: 1148,
         align: 'center',
-        fontFamily: "'Montserrat', sans-serif",
-        fontSize: 33,
-        fontWeight: 800,
+        fontFamily: "'Neulis-MediumItalic', 'Neulis', sans-serif",
+        fontStyle: 'italic',
+        fontSize: 32,
+        fontWeight: 500,
         color: '#503323', // Deep rustic brown from Card2.psd
         letterSpacing: 2,
         textTransform: 'uppercase',
         maxWidth: 640,
         autoScaleDown: true,
-        minFontSize: 18,
+        minFontSize: 16,
       },
+    },
+
+    // 7. Committee Script Overlay (Cursive 'Committee' layer from Card2.psd)
+    {
+      id: 'layer-committee-overlay',
+      name: 'Committee Script Overlay',
+      type: 'overlay',
+      zIndex: 46,
+      source: committeeScriptUrl,
+      x: 484,
+      y: 1133,
+      width: 145,
+      height: 68,
+      opacity: 1.0,
+      blendMode: 'source-over',
     },
   ],
   exportSettings: {

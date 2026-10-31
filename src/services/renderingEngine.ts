@@ -2,6 +2,62 @@ import { TemplateConfig, UserCardData, TemplateLayer } from '../types/template';
 
 // Image cache to prevent re-decoding SVGs and images on every frame
 const imageCache = new Map<string, HTMLImageElement>();
+let fontsLoadedPromise: Promise<void> | null = null;
+
+/**
+ * Ensure custom typography fonts (Neulis suite) are preloaded and registered
+ */
+export async function ensureCustomFontsLoaded(): Promise<void> {
+  if (typeof document === 'undefined') return;
+
+  if (!fontsLoadedPromise) {
+    fontsLoadedPromise = (async () => {
+      try {
+        if (typeof FontFace !== 'undefined') {
+          const fontDefinitions = [
+            new FontFace('Neulis-ExtraBoldItalic', 'url(/Neulis-ExtraBoldItalic.otf)', {
+              weight: '800',
+              style: 'italic',
+            }),
+            new FontFace('Neulis-MediumItalic', 'url(/Neulis-MediumItalic.otf)', {
+              weight: '500',
+              style: 'italic',
+            }),
+            new FontFace('Neulis', 'url(/Neulis-ExtraBoldItalic.otf)', {
+              weight: '800',
+              style: 'italic',
+            }),
+            new FontFace('Neulis', 'url(/Neulis-MediumItalic.otf)', {
+              weight: '500',
+              style: 'italic',
+            }),
+          ];
+
+          await Promise.allSettled(
+            fontDefinitions.map(async (font) => {
+              const loaded = await font.load();
+              document.fonts.add(loaded);
+            })
+          );
+        }
+
+        if ('fonts' in document) {
+          await Promise.allSettled([
+            document.fonts.load('italic 800 54px "Neulis-ExtraBoldItalic"'),
+            document.fonts.load('italic 800 54px "Neulis"'),
+            document.fonts.load('italic 500 32px "Neulis-MediumItalic"'),
+            document.fonts.load('italic 500 32px "Neulis"'),
+          ]);
+          await document.fonts.ready;
+        }
+      } catch (err) {
+        console.warn('[RenderingEngine] Font preloading warning:', err);
+      }
+    })();
+  }
+
+  return fontsLoadedPromise;
+}
 
 /**
  * Preload an image URL into memory and cache it
@@ -42,7 +98,7 @@ export async function preloadTemplateAssets(template: TemplateConfig): Promise<v
     }
   }
 
-  await Promise.allSettled(promises);
+  await Promise.allSettled([...promises, ensureCustomFontsLoaded()]);
 }
 
 /**
@@ -252,7 +308,12 @@ function renderTextLayer(
   ctx.save();
 
   let fontSize = config.fontSize;
-  ctx.font = `${config.fontWeight} ${fontSize}px ${config.fontFamily}`;
+  if (role === 'name' && userData.nameFontSize) {
+    fontSize = userData.nameFontSize;
+  }
+
+  const fontStyle = config.fontStyle ? `${config.fontStyle} ` : '';
+  ctx.font = `${fontStyle}${config.fontWeight} ${fontSize}px ${config.fontFamily}`;
 
   // Apply letterSpacing if canvas API supports it
   if ('letterSpacing' in ctx && config.letterSpacing) {
@@ -267,7 +328,7 @@ function renderTextLayer(
     if (measuredWidth > config.maxWidth) {
       const scaleFactor = config.maxWidth / measuredWidth;
       fontSize = Math.max(minSize, Math.floor(fontSize * scaleFactor));
-      ctx.font = `${config.fontWeight} ${fontSize}px ${config.fontFamily}`;
+      ctx.font = `${fontStyle}${config.fontWeight} ${fontSize}px ${config.fontFamily}`;
     }
   }
 
