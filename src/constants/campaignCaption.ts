@@ -6,9 +6,12 @@
  */
 
 export function generateCampaignCaption(committee: string): string {
-  const committeeName = committee?.trim() || 'ENACTUS TEAM';
+  const raw = committee?.trim() || 'Enactus Team';
+  const formattedCommittee = /committee$/i.test(raw) || /team$/i.test(raw)
+    ? raw
+    : `${raw} Committee`;
   
-  return `I am pleased to announce that I have officially joined Enactus Assiut University as a member of the ${committeeName}.
+  return `I am pleased to announce that I have officially joined Enactus Assiut University as a member of the ${formattedCommittee}.
 
 Together with an inspiring team of changemakers, we are dedicated to creating positive social and economic impact through innovation, entrepreneurial action, and community empowerment.
 

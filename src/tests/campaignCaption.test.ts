@@ -6,7 +6,7 @@ describe('Campaign Caption Generator', () => {
   it('correctly inserts each approved committee into the fixed caption', () => {
     APPROVED_COMMITTEES.forEach((committee) => {
       const caption = generateCampaignCaption(committee);
-      expect(caption).toContain(`member of the ${committee}.`);
+      expect(caption).toContain(`member of the ${committee} Committee.`);
       expect(caption).toContain('#WeAreEnactus');
       expect(caption).toContain('#EnactusAU');
     });
@@ -14,7 +14,7 @@ describe('Campaign Caption Generator', () => {
 
   it('provides a sensible fallback if committee is empty string', () => {
     const caption = generateCampaignCaption('');
-    expect(caption).toContain('member of the ENACTUS TEAM.');
+    expect(caption).toContain('member of the Enactus Team.');
   });
 
   it('keeps caption content standardized and free of emojis', () => {
