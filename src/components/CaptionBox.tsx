@@ -32,7 +32,7 @@ export const CaptionBox: React.FC<CaptionBoxProps> = ({ committee }) => {
     <div className="control-section caption-section">
       <div className="section-header">
         <label className="section-label">
-          <span className="step-badge">3</span>
+          <Share2 size={16} className="inline-icon" />
           <span>Social Media Caption</span>
         </label>
       </div>

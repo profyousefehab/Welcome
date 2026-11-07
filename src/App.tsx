@@ -10,9 +10,13 @@ import { FormControls } from './components/FormControls';
 import { CaptionBox } from './components/CaptionBox';
 import logoEnactusAu from './assets/logoEnactusAu_web.png';
 import samplePortraitUrl from './assets/sample_portrait.jpg';
+import { ArrowRight, ArrowLeft, Check, Download, CheckCircle, RotateCcw } from 'lucide-react';
 
 export const App: React.FC = () => {
   const activeTemplate = VINTAGE_POSTAGE_STAMP_TEMPLATE;
+
+  // Active Wizard Step (1: Photo, 2: Details, 3: Export & Share)
+  const [currentStep, setCurrentStep] = useState<1 | 2 | 3>(1);
 
   // Application State
   const [userData, setUserData] = useState<UserCardData>({
@@ -145,23 +149,46 @@ export const App: React.FC = () => {
 
       {/* Main Content Area */}
       <main className="app-main">
-        {/* Simple 3-Step Member Guide Bar */}
-        <div className="member-steps-guide">
-          <div className="step-pill">
-            <span className="step-pill-number">1</span>
-            <span className="step-pill-title">Upload Photo</span>
-          </div>
-          <div className="step-pill-line" />
-          <div className="step-pill">
-            <span className="step-pill-number">2</span>
-            <span className="step-pill-title">Enter Details</span>
-          </div>
-          <div className="step-pill-line" />
-          <div className="step-pill">
+        {/* Interactive 3-Step Member Navigation Bar */}
+        <nav className="member-steps-guide" aria-label="Creation Steps">
+          <button
+            type="button"
+            className={`step-pill ${currentStep === 1 ? 'is-active' : ''} ${currentStep > 1 ? 'is-completed' : ''}`}
+            onClick={() => setCurrentStep(1)}
+            aria-current={currentStep === 1 ? 'step' : undefined}
+          >
+            <span className="step-pill-number">
+              {currentStep > 1 ? <Check size={14} /> : 1}
+            </span>
+            <span className="step-pill-title">1. Your Photo</span>
+          </button>
+
+          <div className={`step-pill-line ${currentStep > 1 ? 'is-completed' : ''}`} />
+
+          <button
+            type="button"
+            className={`step-pill ${currentStep === 2 ? 'is-active' : ''} ${currentStep > 2 ? 'is-completed' : ''}`}
+            onClick={() => setCurrentStep(2)}
+            aria-current={currentStep === 2 ? 'step' : undefined}
+          >
+            <span className="step-pill-number">
+              {currentStep > 2 ? <Check size={14} /> : 2}
+            </span>
+            <span className="step-pill-title">2. Your Details</span>
+          </button>
+
+          <div className={`step-pill-line ${currentStep > 2 ? 'is-completed' : ''}`} />
+
+          <button
+            type="button"
+            className={`step-pill ${currentStep === 3 ? 'is-active' : ''}`}
+            onClick={() => setCurrentStep(3)}
+            aria-current={currentStep === 3 ? 'step' : undefined}
+          >
             <span className="step-pill-number">3</span>
-            <span className="step-pill-title">Download &amp; Share</span>
-          </div>
-        </div>
+            <span className="step-pill-title">3. Download &amp; Share</span>
+          </button>
+        </nav>
 
         {/* Two-Column Responsive Layout */}
         <div className="app-grid">
@@ -175,37 +202,121 @@ export const App: React.FC = () => {
             />
           </section>
 
-          {/* Right Column: Member Controls and Customization Form */}
+          {/* Right Column: Dynamic Step Content */}
           <section className="controls-column" aria-label="Card Editor Controls">
-            {/* Step 1: Member Photo Upload */}
-            <PhotoUploader
-              hasPhoto={!!userData.photoImage}
-              onPhotoLoaded={handlePhotoLoaded}
-              onPhotoRemoved={handlePhotoRemoved}
-            />
+            {/* Step 1: Member Photo Upload & Adjust */}
+            {currentStep === 1 && (
+              <div className="step-panel step-1-panel">
+                <PhotoUploader
+                  hasPhoto={!!userData.photoImage}
+                  onPhotoLoaded={handlePhotoLoaded}
+                  onPhotoRemoved={handlePhotoRemoved}
+                />
 
-            {/* Photo Position & Zoom Controls (Visible when photo is uploaded) */}
-            <PhotoAdjuster
-              position={userData.photoPosition}
-              onUpdatePosition={handleUpdatePosition}
-              disabled={!userData.photoImage}
-            />
+                {userData.photoImage && (
+                  <PhotoAdjuster
+                    position={userData.photoPosition}
+                    onUpdatePosition={handleUpdatePosition}
+                    disabled={!userData.photoImage}
+                  />
+                )}
 
-            {/* Step 2: Full Name & Committee Dropdown + Download CTA */}
-            <FormControls
-              fullName={userData.fullName}
-              nameFontSize={userData.nameFontSize}
-              committee={userData.committee}
-              onFullNameChange={handleFullNameChange}
-              onNameFontSizeChange={handleNameFontSizeChange}
-              onCommitteeChange={handleCommitteeChange}
-              onExportPng={handleExportPng}
-              isExporting={isExporting}
-              hasExported={hasExported}
-            />
+                <div className="step-navigation-footer">
+                  <button
+                    type="button"
+                    className="btn-step-next full-width"
+                    onClick={() => setCurrentStep(2)}
+                  >
+                    <span>Continue to Step 2: Your Details</span>
+                    <ArrowRight size={18} />
+                  </button>
+                </div>
+              </div>
+            )}
 
-            {/* Step 3: Social Media Announcement Caption */}
-            <CaptionBox committee={userData.committee} />
+            {/* Step 2: Full Name & Committee Selector */}
+            {currentStep === 2 && (
+              <div className="step-panel step-2-panel">
+                <FormControls
+                  fullName={userData.fullName}
+                  nameFontSize={userData.nameFontSize}
+                  committee={userData.committee}
+                  onFullNameChange={handleFullNameChange}
+                  onNameFontSizeChange={handleNameFontSizeChange}
+                  onCommitteeChange={handleCommitteeChange}
+                  onNext={() => setCurrentStep(3)}
+                  onBack={() => setCurrentStep(1)}
+                />
+              </div>
+            )}
+
+            {/* Step 3: High-Res Export & Social Media Caption */}
+            {currentStep === 3 && (
+              <div className="step-panel step-3-panel">
+                <div className="control-section export-final-section">
+                  <div className="section-header">
+                    <label className="section-label">
+                      <span className="step-badge">3</span>
+                      <span>Download &amp; Share</span>
+                    </label>
+                  </div>
+
+                  <p className="step-instruction">
+                    Your official membership card is ready. Download the high-resolution PNG and copy your campaign announcement below.
+                  </p>
+
+                  {/* High-Resolution PNG Download Button */}
+                  <div className="export-action-block">
+                    <button
+                      type="button"
+                      className={`btn-export ${hasExported ? 'has-exported' : ''}`}
+                      onClick={handleExportPng}
+                      disabled={isExporting}
+                    >
+                      {isExporting ? (
+                        <>
+                          <div className="spinner-mini" />
+                          <span>Generating 1080 × 1440 PNG...</span>
+                        </>
+                      ) : hasExported ? (
+                        <>
+                          <CheckCircle size={20} />
+                          <span>Card Downloaded! Click to Download Again</span>
+                        </>
+                      ) : (
+                        <>
+                          <Download size={20} />
+                          <span>Download Membership Card (PNG)</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                  {/* Campaign Caption Box */}
+                  <CaptionBox committee={userData.committee} />
+
+                  {/* Step 3 Navigation Footer */}
+                  <div className="step-navigation-footer">
+                    <button
+                      type="button"
+                      className="btn-step-back"
+                      onClick={() => setCurrentStep(2)}
+                    >
+                      <ArrowLeft size={17} />
+                      <span>Back to Details</span>
+                    </button>
+                    <button
+                      type="button"
+                      className="btn-step-subtle"
+                      onClick={() => setCurrentStep(1)}
+                    >
+                      <RotateCcw size={15} />
+                      <span>Change Photo</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </section>
         </div>
       </main>

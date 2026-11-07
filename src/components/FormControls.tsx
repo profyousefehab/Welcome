@@ -1,6 +1,6 @@
 import React from 'react';
 import { APPROVED_COMMITTEES } from '../constants/committees';
-import { User, Users, Download, CheckCircle, Type, Minus, Plus } from 'lucide-react';
+import { User, Users, Type, Minus, Plus, ArrowRight, ArrowLeft } from 'lucide-react';
 
 interface FormControlsProps {
   fullName: string;
@@ -9,9 +9,8 @@ interface FormControlsProps {
   onFullNameChange: (name: string) => void;
   onNameFontSizeChange: (size: number) => void;
   onCommitteeChange: (committee: string) => void;
-  onExportPng: () => void;
-  isExporting: boolean;
-  hasExported: boolean;
+  onNext: () => void;
+  onBack: () => void;
 }
 
 export const FormControls: React.FC<FormControlsProps> = ({
@@ -21,9 +20,8 @@ export const FormControls: React.FC<FormControlsProps> = ({
   onFullNameChange,
   onNameFontSizeChange,
   onCommitteeChange,
-  onExportPng,
-  isExporting,
-  hasExported,
+  onNext,
+  onBack,
 }) => {
   return (
     <div className="control-section form-controls-section">
@@ -33,6 +31,10 @@ export const FormControls: React.FC<FormControlsProps> = ({
           <span>Your Details</span>
         </label>
       </div>
+
+      <p className="step-instruction">
+        Enter your full name and select your assigned committee. The card preview updates in real time.
+      </p>
 
       {/* Full Name Input & Font Size Control */}
       <div className="input-group">
@@ -117,30 +119,23 @@ export const FormControls: React.FC<FormControlsProps> = ({
         </div>
       </div>
 
-      {/* Download Action CTA */}
-      <div className="export-action-block">
+      {/* Step 2 Navigation Footer */}
+      <div className="step-navigation-footer">
         <button
           type="button"
-          className={`btn-export ${hasExported ? 'has-exported' : ''}`}
-          onClick={onExportPng}
-          disabled={isExporting}
+          className="btn-step-back"
+          onClick={onBack}
         >
-          {isExporting ? (
-            <>
-              <div className="spinner-mini" />
-              <span>Generating your card...</span>
-            </>
-          ) : hasExported ? (
-            <>
-              <CheckCircle size={20} />
-              <span>Downloaded! Click to download again</span>
-            </>
-          ) : (
-            <>
-              <Download size={20} />
-              <span>Download Membership Card</span>
-            </>
-          )}
+          <ArrowLeft size={17} />
+          <span>Back to Photo</span>
+        </button>
+        <button
+          type="button"
+          className="btn-step-next"
+          onClick={onNext}
+        >
+          <span>Continue to Step 3</span>
+          <ArrowRight size={17} />
         </button>
       </div>
     </div>
