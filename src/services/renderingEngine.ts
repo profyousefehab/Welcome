@@ -15,21 +15,37 @@ export async function ensureCustomFontsLoaded(): Promise<void> {
       try {
         if (typeof FontFace !== 'undefined') {
           const fontDefinitions = [
-            new FontFace('Neulis-ExtraBoldItalic', 'url(/Neulis-ExtraBoldItalic.otf)', {
-              weight: '800',
+            new FontFace('SF Pro Display Bold Italic', 'url(/SF-Pro-Display-BoldItalic.otf)', {
+              weight: '700',
               style: 'italic',
             }),
-            new FontFace('Neulis-MediumItalic', 'url(/Neulis-MediumItalic.otf)', {
+            new FontFace('SF Pro Display Bold Italic', 'url(/SF-Pro-Display-BoldItalic.otf)', {
+              weight: '400',
+              style: 'normal',
+            }),
+            new FontFace('SFProDisplay-BoldItalic', 'url(/SF-Pro-Display-BoldItalic.otf)', {
+              weight: '700',
+              style: 'italic',
+            }),
+            new FontFace('SFProDisplay-BoldItalic', 'url(/SF-Pro-Display-BoldItalic.otf)', {
+              weight: '400',
+              style: 'normal',
+            }),
+            new FontFace('SF Pro Display', 'url(/SF-Pro-Display-BoldItalic.otf)', {
+              weight: '700',
+              style: 'italic',
+            }),
+            new FontFace('SF Pro Display', 'url(/SF-Pro-Display-Bold.otf)', {
+              weight: '700',
+              style: 'normal',
+            }),
+            new FontFace('SF Pro Display', 'url(/SF-Pro-Display-Medium.otf)', {
               weight: '500',
-              style: 'italic',
+              style: 'normal',
             }),
-            new FontFace('Neulis', 'url(/Neulis-ExtraBoldItalic.otf)', {
-              weight: '800',
-              style: 'italic',
-            }),
-            new FontFace('Neulis', 'url(/Neulis-MediumItalic.otf)', {
-              weight: '500',
-              style: 'italic',
+            new FontFace('SF Pro Display', 'url(/SF-Pro-Display-Regular.otf)', {
+              weight: '400',
+              style: 'normal',
             }),
           ];
 
@@ -43,10 +59,14 @@ export async function ensureCustomFontsLoaded(): Promise<void> {
 
         if ('fonts' in document) {
           await Promise.allSettled([
-            document.fonts.load('italic 800 54px "Neulis-ExtraBoldItalic"'),
-            document.fonts.load('italic 800 54px "Neulis"'),
-            document.fonts.load('italic 500 32px "Neulis-MediumItalic"'),
-            document.fonts.load('italic 500 32px "Neulis"'),
+            document.fonts.load('italic 700 80px "SF Pro Display Bold Italic"'),
+            document.fonts.load('italic 700 80px "SFProDisplay-BoldItalic"'),
+            document.fonts.load('italic 700 38px "SF Pro Display Bold Italic"'),
+            document.fonts.load('italic 700 38px "SFProDisplay-BoldItalic"'),
+            document.fonts.load('80px "SF Pro Display Bold Italic"'),
+            document.fonts.load('38px "SF Pro Display Bold Italic"'),
+            document.fonts.load('700 80px "SF Pro Display"'),
+            document.fonts.load('400 16px "SF Pro Display"'),
           ]);
           await document.fonts.ready;
         }

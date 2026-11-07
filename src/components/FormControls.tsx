@@ -16,7 +16,7 @@ interface FormControlsProps {
 
 export const FormControls: React.FC<FormControlsProps> = ({
   fullName,
-  nameFontSize = 54,
+  nameFontSize = 80,
   committee,
   onFullNameChange,
   onNameFontSizeChange,
@@ -66,7 +66,7 @@ export const FormControls: React.FC<FormControlsProps> = ({
             <button
               type="button"
               className="font-size-btn"
-              onClick={() => onNameFontSizeChange(Math.max(24, nameFontSize - 2))}
+              onClick={() => onNameFontSizeChange(Math.max(30, nameFontSize - 2))}
               title="Decrease font size"
               aria-label="Decrease font size"
             >
@@ -74,8 +74,8 @@ export const FormControls: React.FC<FormControlsProps> = ({
             </button>
             <input
               type="range"
-              min={24}
-              max={80}
+              min={30}
+              max={100}
               step={2}
               value={nameFontSize}
               onChange={(e) => onNameFontSizeChange(Number(e.target.value))}
@@ -85,7 +85,7 @@ export const FormControls: React.FC<FormControlsProps> = ({
             <button
               type="button"
               className="font-size-btn"
-              onClick={() => onNameFontSizeChange(Math.min(80, nameFontSize + 2))}
+              onClick={() => onNameFontSizeChange(Math.min(100, nameFontSize + 2))}
               title="Increase font size"
               aria-label="Increase font size"
             >

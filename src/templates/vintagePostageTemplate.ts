@@ -105,7 +105,7 @@ export const VINTAGE_POSTAGE_STAMP_TEMPLATE: TemplateConfig = {
       blendMode: 'source-over',
     },
 
-    // 5. Member Full Name (Layer 'Yousef Ehab' in Card2.psd)
+    // 5. Member Full Name (Layer 'Yousef Ehab' in Card2.psd using SF Pro Display Bold Italic)
     {
       id: 'layer-member-name',
       name: 'Member Full Name',
@@ -114,28 +114,22 @@ export const VINTAGE_POSTAGE_STAMP_TEMPLATE: TemplateConfig = {
       role: 'name',
       config: {
         x: 556,
-        y: 1076,
+        y: 1078,
         align: 'center',
-        fontFamily: "'Neulis-ExtraBoldItalic', 'Neulis', sans-serif",
+        fontFamily: "'SF Pro Display Bold Italic', 'SFProDisplay-BoldItalic', 'SF Pro Display', sans-serif",
         fontStyle: 'italic',
-        fontSize: 54, // Balanced default size, editable by student
-        fontWeight: 800,
+        fontSize: 80, // Matches Card2.psd typography
+        fontWeight: 700,
         color: '#FFFFFF',
-        letterSpacing: 1,
+        letterSpacing: 0.5,
         textTransform: 'capitalize',
-        maxWidth: 640,
+        maxWidth: 580,
         autoScaleDown: true,
-        minFontSize: 24,
-        shadow: {
-          color: 'rgba(0, 0, 0, 0.25)',
-          blur: 6,
-          offsetX: 0,
-          offsetY: 2,
-        },
+        minFontSize: 28,
       },
     },
 
-    // 6. Selected Committee (Layer 'SOCIAL MEDIA' in Card2.psd)
+    // 6. Selected Committee (Layer 'SOCIAL MEDIA' in Card2.psd using SF Pro Display Bold Italic)
     {
       id: 'layer-committee',
       name: 'Assigned Committee',
@@ -144,18 +138,18 @@ export const VINTAGE_POSTAGE_STAMP_TEMPLATE: TemplateConfig = {
       role: 'committee',
       config: {
         x: 556,
-        y: 1148,
+        y: 1150,
         align: 'center',
-        fontFamily: "'Neulis-MediumItalic', 'Neulis', sans-serif",
+        fontFamily: "'SF Pro Display Bold Italic', 'SFProDisplay-BoldItalic', 'SF Pro Display', sans-serif",
         fontStyle: 'italic',
-        fontSize: 32,
-        fontWeight: 500,
+        fontSize: 38, // Matches Card2.psd typography
+        fontWeight: 700,
         color: '#503323', // Deep rustic brown from Card2.psd
-        letterSpacing: 2,
+        letterSpacing: 1,
         textTransform: 'uppercase',
-        maxWidth: 640,
+        maxWidth: 600,
         autoScaleDown: true,
-        minFontSize: 16,
+        minFontSize: 18,
       },
     },
 

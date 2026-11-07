@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { VINTAGE_POSTAGE_STAMP_TEMPLATE } from './templates/vintagePostageTemplate';
 import { UserCardData } from './types/template';
 import { exportHighResolutionPng } from './services/renderingEngine';
@@ -9,6 +9,7 @@ import { PhotoAdjuster } from './components/PhotoAdjuster';
 import { FormControls } from './components/FormControls';
 import { CaptionBox } from './components/CaptionBox';
 import logoEnactusAu from './assets/logoEnactusAu_web.png';
+import samplePortraitUrl from './assets/sample_portrait.jpg';
 
 export const App: React.FC = () => {
   const activeTemplate = VINTAGE_POSTAGE_STAMP_TEMPLATE;
@@ -23,9 +24,27 @@ export const App: React.FC = () => {
       zoom: 1.0,
     },
     fullName: 'Yousef Ehab',
-    nameFontSize: 54,
+    nameFontSize: 80,
     committee: 'SOCIAL MEDIA',
   });
+
+  // Preload initial sample portrait matching Card2.psd
+  useEffect(() => {
+    const img = new Image();
+    img.onload = () => {
+      setUserData((prev) => {
+        if (!prev.photoImage) {
+          return {
+            ...prev,
+            photoImage: img,
+            photoUrl: samplePortraitUrl,
+          };
+        }
+        return prev;
+      });
+    };
+    img.src = samplePortraitUrl;
+  }, []);
 
   const [isExporting, setIsExporting] = useState(false);
   const [hasExported, setHasExported] = useState(false);

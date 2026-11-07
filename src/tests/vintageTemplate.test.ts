@@ -44,7 +44,7 @@ describe('Vintage Postage Stamp Template (Card2.psd)', () => {
     }
   });
 
-  it('has name and committee text layers configured with Neulis typography', () => {
+  it('has name and committee text layers configured with SF Pro Display Bold Italic typography', () => {
     const textLayers = VINTAGE_POSTAGE_STAMP_TEMPLATE.layers.filter(
       (l) => l.type === 'text'
     );
@@ -57,14 +57,14 @@ describe('Vintage Postage Stamp Template (Card2.psd)', () => {
     if (nameLayer && nameLayer.type === 'text') {
       expect(nameLayer.config.color).toBe('#FFFFFF');
       expect(nameLayer.config.align).toBe('center');
-      expect(nameLayer.config.fontFamily).toContain('Neulis-ExtraBoldItalic');
+      expect(nameLayer.config.fontFamily).toContain('SF Pro Display Bold Italic');
       expect(nameLayer.config.fontStyle).toBe('italic');
     }
 
     if (committeeLayer && committeeLayer.type === 'text') {
       expect(committeeLayer.config.color).toBe('#503323');
       expect(committeeLayer.config.align).toBe('center');
-      expect(committeeLayer.config.fontFamily).toContain('Neulis-MediumItalic');
+      expect(committeeLayer.config.fontFamily).toContain('SF Pro Display Bold Italic');
       expect(committeeLayer.config.fontStyle).toBe('italic');
     }
   });
