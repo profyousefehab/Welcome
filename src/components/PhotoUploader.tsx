@@ -119,10 +119,10 @@ export const PhotoUploader: React.FC<PhotoUploaderProps> = ({
           </div>
           <div className="dropzone-text">
             <p className="dropzone-title">
-              {hasPhoto ? 'Click to change photo' : 'Choose a photo or drag & drop here'}
+              {hasPhoto ? 'Tap to change photo' : 'Tap to select photo (Camera or Library)'}
             </p>
             <p className="dropzone-hint">
-              JPG or PNG &bull; Clear portrait photo works best
+              JPG, PNG or WebP &bull; Clear portrait works best
             </p>
           </div>
         </div>

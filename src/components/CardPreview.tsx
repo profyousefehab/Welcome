@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { TemplateConfig, UserCardData } from '../types/template';
 import { renderCardToCanvas, preloadTemplateAssets } from '../services/renderingEngine';
-import { Move } from 'lucide-react';
+import { Move, Maximize2, X } from 'lucide-react';
 
 interface CardPreviewProps {
   template: TemplateConfig;
@@ -24,6 +24,7 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isAssetsLoaded, setIsAssetsLoaded] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const dragStartRef = useRef<{
     mode: 'photo' | 'name';
     startMouseX: number;
@@ -147,6 +148,21 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
           className="preview-canvas"
         />
 
+        {/* Full View Inspect Button on Canvas */}
+        <button
+          type="button"
+          className="btn-preview-expand"
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsFullscreen(true);
+          }}
+          title="Inspect full-size card"
+          aria-label="Inspect full card"
+        >
+          <Maximize2 size={12} />
+          <span>Full View</span>
+        </button>
+
         {/* Step-Specific Canvas Hints */}
         {!isDragging && (
           <>
@@ -173,6 +189,50 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
           </div>
         )}
       </div>
+
+      {/* Fullscreen Modal View for Mobile Inspection */}
+      {isFullscreen && (
+        <div className="canvas-fullscreen-modal" onClick={() => setIsFullscreen(false)}>
+          <div className="fullscreen-modal-backdrop" />
+          <div className="fullscreen-modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="fullscreen-modal-header">
+              <span className="fullscreen-title">Official Membership Card</span>
+              <button
+                type="button"
+                className="btn-close-fullscreen"
+                onClick={() => setIsFullscreen(false)}
+                aria-label="Close full view"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <div
+              className="fullscreen-canvas-wrapper"
+              style={{ aspectRatio: `${template.dimensions.width} / ${template.dimensions.height}` }}
+            >
+              <canvas
+                ref={(node) => {
+                  if (node) {
+                    renderCardToCanvas(node, template, userData, 1.0);
+                  }
+                }}
+                width={template.dimensions.width}
+                height={template.dimensions.height}
+                className="preview-canvas-fullscreen"
+              />
+            </div>
+            <div className="fullscreen-modal-footer">
+              <button
+                type="button"
+                className="btn-modal-dismiss"
+                onClick={() => setIsFullscreen(false)}
+              >
+                Close Full View
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

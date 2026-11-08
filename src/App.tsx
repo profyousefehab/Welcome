@@ -206,10 +206,10 @@ export const App: React.FC = () => {
           </button>
         </nav>
 
-        {/* Two-Column Responsive Layout */}
+        {/* Two-Column Responsive Layout (Mobile-First) */}
         <div className="app-grid">
-          {/* Left Column: Live Card Preview (Sticky on Desktop) */}
-          <section className="preview-column" aria-label="Card Live Preview">
+          {/* Left Column: Live Card Preview (Optimized for Mobile & Desktop) */}
+          <section className={`preview-column step-${currentStep}-preview`} aria-label="Card Live Preview">
             <CardPreview
               template={activeTemplate}
               userData={userData}
