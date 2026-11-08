@@ -173,7 +173,7 @@ function renderLayer(
       renderPhotoLayer(ctx, layer, userData);
       break;
     case 'overlay':
-      renderOverlayLayer(ctx, layer);
+      renderOverlayLayer(ctx, layer, userData);
       break;
     case 'text':
       renderTextLayer(ctx, layer, userData);
@@ -276,7 +276,8 @@ function renderPhotoLayer(
  */
 function renderOverlayLayer(
   ctx: CanvasRenderingContext2D,
-  layer: Extract<TemplateLayer, { type: 'overlay' }>
+  layer: Extract<TemplateLayer, { type: 'overlay' }>,
+  userData: UserCardData
 ): void {
   if (!layer.source || !imageCache.has(layer.source)) return;
 
@@ -290,7 +291,14 @@ function renderOverlayLayer(
     ctx.globalCompositeOperation = layer.blendMode;
   }
 
-  ctx.drawImage(img, layer.x, layer.y, layer.width, layer.height);
+  let posX = layer.x;
+  let posY = layer.y;
+  if (layer.id === 'layer-committee-overlay' && userData.committeePosition) {
+    posX += userData.committeePosition.x;
+    posY += userData.committeePosition.y;
+  }
+
+  ctx.drawImage(img, posX, posY, layer.width, layer.height);
   ctx.restore();
 }
 
@@ -355,6 +363,18 @@ function renderTextLayer(
   ctx.textAlign = config.align;
   ctx.textBaseline = 'middle';
 
+  // Calculate dynamic position with user offset
+  let posX = config.x;
+  let posY = config.y;
+
+  if (role === 'name' && userData.namePosition) {
+    posX += userData.namePosition.x;
+    posY += userData.namePosition.y;
+  } else if (role === 'committee' && userData.committeePosition) {
+    posX += userData.committeePosition.x;
+    posY += userData.committeePosition.y;
+  }
+
   // Apply Shadow
   if (config.shadow) {
     ctx.shadowColor = config.shadow.color;
@@ -367,12 +387,12 @@ function renderTextLayer(
   if (config.stroke) {
     ctx.strokeStyle = config.stroke.color;
     ctx.lineWidth = config.stroke.width;
-    ctx.strokeText(text, config.x, config.y);
+    ctx.strokeText(text, posX, posY);
   }
 
   // Fill Text
   ctx.fillStyle = config.color;
-  ctx.fillText(text, config.x, config.y);
+  ctx.fillText(text, posX, posY);
 
   ctx.restore();
 }

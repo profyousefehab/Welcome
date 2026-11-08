@@ -29,7 +29,9 @@ export const App: React.FC = () => {
     },
     fullName: 'Yousef Ehab',
     nameFontSize: 80,
+    namePosition: { x: 0, y: 0 },
     committee: 'SOCIAL MEDIA',
+    committeePosition: { x: 0, y: 0 },
   });
 
   // Preload initial sample portrait matching Card2.psd
@@ -93,10 +95,24 @@ export const App: React.FC = () => {
     }));
   };
 
+  const handleNamePositionChange = (newPos: { x: number; y: number }) => {
+    setUserData((prev) => ({
+      ...prev,
+      namePosition: newPos,
+    }));
+  };
+
   const handleCommitteeChange = (committee: string) => {
     setUserData((prev) => ({
       ...prev,
       committee,
+    }));
+  };
+
+  const handleCommitteePositionChange = (newPos: { x: number; y: number }) => {
+    setUserData((prev) => ({
+      ...prev,
+      committeePosition: newPos,
     }));
   };
 
@@ -197,7 +213,9 @@ export const App: React.FC = () => {
             <CardPreview
               template={activeTemplate}
               userData={userData}
+              currentStep={currentStep}
               onUpdatePosition={handleUpdatePosition}
+              onUpdateNamePosition={handleNamePositionChange}
               isExporting={isExporting}
             />
           </section>
@@ -234,16 +252,20 @@ export const App: React.FC = () => {
               </div>
             )}
 
-            {/* Step 2: Full Name & Committee Selector */}
+            {/* Step 2: Full Name & Committee Selector + X/Y Text Controls */}
             {currentStep === 2 && (
               <div className="step-panel step-2-panel">
                 <FormControls
                   fullName={userData.fullName}
                   nameFontSize={userData.nameFontSize}
+                  namePosition={userData.namePosition || { x: 0, y: 0 }}
                   committee={userData.committee}
+                  committeePosition={userData.committeePosition || { x: 0, y: 0 }}
                   onFullNameChange={handleFullNameChange}
                   onNameFontSizeChange={handleNameFontSizeChange}
+                  onNamePositionChange={handleNamePositionChange}
                   onCommitteeChange={handleCommitteeChange}
+                  onCommitteePositionChange={handleCommitteePositionChange}
                   onNext={() => setCurrentStep(3)}
                   onBack={() => setCurrentStep(1)}
                 />

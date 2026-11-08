@@ -142,6 +142,14 @@ export interface UserCardData {
   };
   fullName: string;
   nameFontSize?: number;
+  namePosition?: {
+    x: number; // offset from template anchor in px
+    y: number; // offset from template anchor in px
+  };
   committee: string;
+  committeePosition?: {
+    x: number; // offset from template anchor in px
+    y: number; // offset from template anchor in px
+  };
 }
 

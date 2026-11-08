@@ -546,12 +546,20 @@ button.step-pill.is-active .step-pill-title {
   touch-action: none;
 }
 
-.preview-canvas-container.has-photo {
+.preview-canvas-container.step-1.has-photo {
+  cursor: grab;
+}
+
+.preview-canvas-container.step-2 {
   cursor: grab;
 }
 
 .preview-canvas-container.is-dragging {
   cursor: grabbing;
+}
+
+.preview-canvas-container.step-3 {
+  cursor: default;
 }
 
 .preview-canvas {
@@ -1006,6 +1014,88 @@ button.step-pill.is-active .step-pill-title {
 
 .font-size-slider::-webkit-slider-thumb:hover {
   transform: scale(1.15);
+}
+
+/* Position Adjuster Block */
+.position-adjuster-block {
+  margin-top: 0.75rem;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.85rem;
+}
+
+.position-adjuster-block.committee-position-block {
+  margin-top: 0.75rem;
+}
+
+.position-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.55rem;
+  font-size: 0.8rem;
+}
+
+.position-label {
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 600;
+}
+
+.btn-reset-position {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: transparent;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.18rem 0.45rem;
+  font-size: 0.72rem;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-reset-position:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-gold-warm);
+  border-color: rgba(244, 185, 43, 0.3);
+}
+
+.position-axis-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.axis-control-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.axis-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.74rem;
+}
+
+.axis-title {
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.axis-value {
+  color: #38BDF8;
+  font-weight: 700;
+  font-size: 0.76rem;
+  font-variant-numeric: tabular-nums;
 }
 
 .select-wrapper {

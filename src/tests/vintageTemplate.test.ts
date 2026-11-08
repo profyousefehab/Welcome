@@ -116,5 +116,65 @@ describe('Vintage Postage Stamp Template (Card2.psd)', () => {
     // Name text layer should have used the custom 46px font size
     expect(assignedFonts.some((f) => f.includes('46px'))).toBe(true);
   });
+
+  it('applies namePosition and committeePosition offsets to text rendering coordinates', () => {
+    const filledTexts: { text: string; x: number; y: number }[] = [];
+    const mockCtx = {
+      save: () => {},
+      restore: () => {},
+      clearRect: () => {},
+      scale: () => {},
+      fillRect: () => {},
+      beginPath: () => {},
+      closePath: () => {},
+      clip: () => {},
+      rect: () => {},
+      measureText: () => ({ width: 100 }),
+      fillText: (text: string, x: number, y: number) => {
+        filledTexts.push({ text, x, y });
+      },
+      strokeText: () => {},
+      drawImage: () => {},
+      set font(_: string) {},
+      get font() {
+        return '';
+      },
+    };
+
+    const mockCanvas = {
+      getContext: () => mockCtx,
+      width: 0,
+      height: 0,
+    } as unknown as HTMLCanvasElement;
+
+    // Default template coordinates: name is at (556, 1078), committee is at (556, 1150)
+    renderCardToCanvas(
+      mockCanvas,
+      VINTAGE_POSTAGE_STAMP_TEMPLATE,
+      {
+        fullName: 'Offset Student',
+        nameFontSize: 80,
+        namePosition: { x: 12, y: -8 },
+        committee: 'SOCIAL MEDIA',
+        committeePosition: { x: -6, y: 4 },
+        photoImage: null,
+        photoUrl: null,
+        photoPosition: { x: 0, y: 0, zoom: 1 },
+      },
+      1.0
+    );
+
+    const nameRender = filledTexts.find((t) => t.text.toLowerCase().includes('offset student'));
+    expect(nameRender).toBeDefined();
+    // Expected x = 556 + 12 = 568, y = 1078 - 8 = 1070
+    expect(nameRender?.x).toBe(556 + 12);
+    expect(nameRender?.y).toBe(1078 - 8);
+
+    const committeeRender = filledTexts.find((t) => t.text.includes('SOCIAL MEDIA'));
+    expect(committeeRender).toBeDefined();
+    // Expected x = 556 - 6 = 550, y = 1150 + 4 = 1154
+    expect(committeeRender?.x).toBe(556 - 6);
+    expect(committeeRender?.y).toBe(1150 + 4);
+  });
 });
 
