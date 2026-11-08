@@ -174,9 +174,12 @@ export const App: React.FC = () => {
             aria-current={currentStep === 1 ? 'step' : undefined}
           >
             <span className="step-pill-number">
-              {currentStep > 1 ? <Check size={14} /> : 1}
+              {currentStep > 1 ? <Check size={13} /> : 1}
             </span>
-            <span className="step-pill-title">1. Your Photo</span>
+            <span className="step-pill-title">
+              <span className="step-title-short">Photo</span>
+              <span className="step-title-full">Your Photo</span>
+            </span>
           </button>
 
           <div className={`step-pill-line ${currentStep > 1 ? 'is-completed' : ''}`} />
@@ -188,9 +191,12 @@ export const App: React.FC = () => {
             aria-current={currentStep === 2 ? 'step' : undefined}
           >
             <span className="step-pill-number">
-              {currentStep > 2 ? <Check size={14} /> : 2}
+              {currentStep > 2 ? <Check size={13} /> : 2}
             </span>
-            <span className="step-pill-title">2. Your Details</span>
+            <span className="step-pill-title">
+              <span className="step-title-short">Details</span>
+              <span className="step-title-full">Your Details</span>
+            </span>
           </button>
 
           <div className={`step-pill-line ${currentStep > 2 ? 'is-completed' : ''}`} />
@@ -202,7 +208,10 @@ export const App: React.FC = () => {
             aria-current={currentStep === 3 ? 'step' : undefined}
           >
             <span className="step-pill-number">3</span>
-            <span className="step-pill-title">3. Download &amp; Share</span>
+            <span className="step-pill-title">
+              <span className="step-title-short">Export</span>
+              <span className="step-title-full">Download</span>
+            </span>
           </button>
         </nav>
 

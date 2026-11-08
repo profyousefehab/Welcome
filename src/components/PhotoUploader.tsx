@@ -1,6 +1,6 @@
 import React, { useState, useRef, DragEvent, ChangeEvent } from 'react';
 import { validateUploadedPhoto } from '../services/imageValidation';
-import { UploadCloud, CheckCircle2, AlertTriangle, Trash2 } from 'lucide-react';
+import { UploadCloud, CheckCircle2, AlertTriangle, Trash2, RefreshCw } from 'lucide-react';
 
 interface PhotoUploaderProps {
   hasPhoto: boolean;
@@ -35,7 +35,7 @@ export const PhotoUploader: React.FC<PhotoUploaderProps> = ({
       const objectUrl = URL.createObjectURL(file);
       onPhotoLoaded(result.image, objectUrl);
       setSuccessInfo(
-        `Photo validated (${result.dimensions?.width}×${result.dimensions?.height}px, ${(file.size / (1024 * 1024)).toFixed(2)} MB)`
+        `Photo loaded (${result.dimensions?.width}×${result.dimensions?.height}px)`
       );
     } catch {
       setErrorMessage('An unexpected error occurred while validating the image.');
@@ -80,53 +80,67 @@ export const PhotoUploader: React.FC<PhotoUploaderProps> = ({
 
   return (
     <div className="control-section photo-uploader-section">
-      <div className="section-header">
-        <label className="section-label">
-          <span className="step-badge">1</span>
-          <span>Upload Your Photo</span>
-        </label>
-        {hasPhoto && (
-          <button
-            type="button"
-            className="btn-text-danger"
-            onClick={handleRemove}
-            title="Remove photo"
-          >
-            <Trash2 size={14} />
-            <span>Remove</span>
-          </button>
-        )}
-      </div>
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/jpeg,image/png,image/webp"
+        style={{ display: 'none' }}
+        onChange={handleFileChange}
+      />
 
-      <div
-        className={`dropzone ${isDragging ? 'is-dragging' : ''} ${hasPhoto ? 'has-file' : ''}`}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
-        onClick={() => fileInputRef.current?.click()}
-      >
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/jpeg,image/png,image/webp"
-          style={{ display: 'none' }}
-          onChange={handleFileChange}
-        />
-
-        <div className="dropzone-content">
-          <div className="dropzone-icon-circle">
-            <UploadCloud size={24} />
+      {hasPhoto ? (
+        /* Sleek compact bar when photo is already loaded */
+        <div className="photo-compact-ready-bar">
+          <div className="photo-ready-left">
+            <span className="photo-ready-badge">
+              <CheckCircle2 size={15} />
+            </span>
+            <div className="photo-ready-text">
+              <span className="photo-ready-title">Portrait Photo Added</span>
+              <span className="photo-ready-hint">Drag card above to frame</span>
+            </div>
           </div>
-          <div className="dropzone-text">
-            <p className="dropzone-title">
-              {hasPhoto ? 'Tap to change photo' : 'Tap to select photo (Camera or Library)'}
-            </p>
-            <p className="dropzone-hint">
-              JPG, PNG or WebP &bull; Clear portrait works best
-            </p>
+          <div className="photo-ready-actions">
+            <button
+              type="button"
+              className="btn-change-photo"
+              onClick={() => fileInputRef.current?.click()}
+              title="Upload a different photo"
+            >
+              <RefreshCw size={13} />
+              <span>Change</span>
+            </button>
+            <button
+              type="button"
+              className="btn-remove-photo"
+              onClick={handleRemove}
+              title="Remove photo"
+              aria-label="Remove photo"
+            >
+              <Trash2 size={14} />
+            </button>
           </div>
         </div>
-      </div>
+      ) : (
+        /* Compact clean dropzone when no photo is loaded */
+        <div
+          className={`dropzone compact-dropzone ${isDragging ? 'is-dragging' : ''}`}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+          onClick={() => fileInputRef.current?.click()}
+        >
+          <div className="dropzone-content compact">
+            <div className="dropzone-icon-circle compact">
+              <UploadCloud size={20} />
+            </div>
+            <div className="dropzone-text">
+              <p className="dropzone-title">Upload Your Portrait Photo</p>
+              <p className="dropzone-hint">Tap to select from camera or gallery (JPG, PNG)</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {isValidating && (
         <div className="status-message validating">
@@ -137,15 +151,15 @@ export const PhotoUploader: React.FC<PhotoUploaderProps> = ({
 
       {errorMessage && (
         <div className="status-message error" role="alert">
-          <AlertTriangle size={16} />
+          <AlertTriangle size={15} />
           <span>{errorMessage}</span>
         </div>
       )}
 
       {successInfo && !errorMessage && (
-        <div className="status-message success">
-          <CheckCircle2 size={16} />
-          <span>Photo loaded! Drag on the card preview to frame your face.</span>
+        <div className="status-message success compact">
+          <CheckCircle2 size={14} />
+          <span>{successInfo}</span>
         </div>
       )}
     </div>

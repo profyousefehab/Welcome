@@ -163,24 +163,6 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
           <span>Full View</span>
         </button>
 
-        {/* Step-Specific Canvas Hints */}
-        {!isDragging && (
-          <>
-            {currentStep === 1 && userData.photoImage && (
-              <div className="canvas-drag-hint">
-                <Move size={14} />
-                <span>Drag photo on canvas to position</span>
-              </div>
-            )}
-            {currentStep === 2 && (
-              <div className="canvas-drag-hint text-drag-hint">
-                <Move size={14} />
-                <span>Drag name on canvas to position</span>
-              </div>
-            )}
-          </>
-        )}
-
         {/* Exporting Loading Overlay */}
         {isExporting && (
           <div className="canvas-export-overlay">
@@ -189,6 +171,24 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
           </div>
         )}
       </div>
+
+      {/* Step-Specific Canvas Sub-Hints (Positioned below card to keep artwork clean) */}
+      {!isDragging && (
+        <div className="canvas-under-hint">
+          {currentStep === 1 && userData.photoImage && (
+            <span className="under-hint-pill">
+              <Move size={12} />
+              <span>Drag card to frame photo</span>
+            </span>
+          )}
+          {currentStep === 2 && (
+            <span className="under-hint-pill text-hint">
+              <Move size={12} />
+              <span>Drag card to reposition name</span>
+            </span>
+          )}
+        </div>
+      )}
 
       {/* Fullscreen Modal View for Mobile Inspection */}
       {isFullscreen && (

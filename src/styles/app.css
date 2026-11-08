@@ -193,13 +193,19 @@ body {
 
 /* App Header */
 .app-header {
-  background: rgba(11, 25, 44, 0.9);
+  background: rgba(11, 25, 44, 0.92);
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--color-border);
   position: sticky;
   top: 0;
   z-index: 100;
-  padding: 0.85rem 1.5rem;
+  padding: 0.45rem 0.85rem;
+}
+
+@media (min-width: 640px) {
+  .app-header {
+    padding: 0.85rem 1.5rem;
+  }
 }
 
 .header-container {
@@ -208,21 +214,33 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
 .brand-badge {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.65rem;
+}
+
+@media (min-width: 640px) {
+  .brand-badge {
+    gap: 1rem;
+  }
 }
 
 .enactus-header-logo {
-  height: 44px;
+  height: 32px;
   width: auto;
   object-fit: contain;
   display: block;
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+}
+
+@media (min-width: 640px) {
+  .enactus-header-logo {
+    height: 44px;
+  }
 }
 
 .brand-title-wrap {
@@ -233,17 +251,31 @@ body {
 .brand-title {
   font-family: var(--font-family-display);
   font-weight: 800;
-  font-size: 1.15rem;
+  font-size: 0.95rem;
   letter-spacing: 0.02em;
   color: var(--color-text-main);
-  line-height: 1.2;
+  line-height: 1.15;
+}
+
+@media (min-width: 640px) {
+  .brand-title {
+    font-size: 1.15rem;
+    line-height: 1.2;
+  }
 }
 
 .brand-tagline {
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   color: var(--color-gold-warm);
   font-weight: 600;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
+}
+
+@media (min-width: 640px) {
+  .brand-tagline {
+    font-size: 0.78rem;
+    letter-spacing: 0.03em;
+  }
 }
 
 .header-season-tag {
@@ -251,18 +283,27 @@ body {
   border: 1px solid rgba(244, 185, 43, 0.35);
   color: var(--color-gold-warm);
   font-family: var(--font-family-display);
-  font-size: 0.75rem;
+  font-size: 0.68rem;
   font-weight: 800;
-  letter-spacing: 0.06em;
-  padding: 0.35rem 0.75rem;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.55rem;
   border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+
+@media (min-width: 640px) {
+  .header-season-tag {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.75rem;
+    letter-spacing: 0.06em;
+  }
 }
 
 /* App Main Container (Mobile-First) */
 .app-main {
   max-width: 1300px;
   margin: 0 auto;
-  padding: 0.75rem 0.75rem 2rem 0.75rem;
+  padding: 0.5rem 0.65rem 1.5rem 0.65rem;
 }
 
 @media (min-width: 768px) {
@@ -277,11 +318,11 @@ body {
   align-items: center;
   background: var(--color-bg-surface);
   border: 1px solid var(--color-border);
-  border-radius: 12px;
-  padding: 0.35rem;
-  margin-bottom: 1rem;
+  border-radius: 10px;
+  padding: 0.25rem;
+  margin-bottom: 0.65rem;
   box-shadow: var(--shadow-sm);
-  gap: 0.35rem;
+  gap: 0.25rem;
   width: 100%;
 }
 
@@ -290,12 +331,12 @@ button.step-pill {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
+  gap: 0.35rem;
   background: transparent;
   border: 1px solid transparent;
-  border-radius: 9px;
-  padding: 0.5rem 0.25rem;
-  min-height: 44px;
+  border-radius: 8px;
+  padding: 0.35rem 0.2rem;
+  min-height: 38px;
   cursor: pointer;
   transition: all 0.2s ease;
   font-family: inherit;
@@ -315,13 +356,13 @@ button.step-pill.is-active {
 }
 
 .step-pill-number {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background: #1E293B;
   color: var(--color-text-muted);
   font-weight: 700;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -334,7 +375,7 @@ button.step-pill.is-active .step-pill-number {
   color: #070F2B;
   font-weight: 800;
   border-color: var(--color-gold-warm);
-  box-shadow: 0 0 10px rgba(244, 185, 43, 0.4);
+  box-shadow: 0 0 8px rgba(244, 185, 43, 0.4);
 }
 
 button.step-pill.is-completed .step-pill-number {
@@ -344,10 +385,28 @@ button.step-pill.is-completed .step-pill-number {
 }
 
 .step-pill-title {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 600;
   color: inherit;
   white-space: nowrap;
+}
+
+.step-title-short {
+  display: inline;
+}
+
+.step-title-full {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .step-title-short {
+    display: none;
+  }
+
+  .step-title-full {
+    display: inline;
+  }
 }
 
 button.step-pill.is-active .step-pill-title {
@@ -361,21 +420,23 @@ button.step-pill.is-active .step-pill-title {
 
 @media (min-width: 640px) {
   .member-steps-guide {
-    padding: 0.6rem 1.25rem;
+    padding: 0.5rem 1.25rem;
     gap: 0.75rem;
-    margin-bottom: 1.75rem;
+    margin-bottom: 1.5rem;
+    border-radius: 14px;
   }
 
   button.step-pill {
     flex: initial;
     padding: 0.45rem 0.85rem;
     gap: 0.65rem;
+    min-height: 44px;
   }
 
   .step-pill-number {
-    width: 26px;
-    height: 26px;
-    font-size: 0.82rem;
+    width: 24px;
+    height: 24px;
+    font-size: 0.8rem;
   }
 
   .step-pill-title {
@@ -508,7 +569,7 @@ button.step-pill.is-active .step-pill-title {
 .app-grid {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 0.65rem;
 }
 
 @media (min-width: 1024px) {
@@ -531,43 +592,39 @@ button.step-pill.is-active .step-pill-title {
   position: relative;
   width: 100%;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
 }
 
 @media (min-width: 1024px) {
   .preview-column {
     position: sticky;
-    top: 5.5rem;
+    top: 5rem;
     display: block;
     width: auto;
   }
 }
 
 .card-preview-wrapper {
-  background: var(--color-bg-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 16px;
-  padding: 0.5rem;
-  box-shadow: var(--shadow-md);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
   width: 100%;
-  max-width: 290px;
+  max-width: 100%;
   margin: 0 auto;
-}
-
-@media (min-width: 640px) {
-  .card-preview-wrapper {
-    max-width: 360px;
-    padding: 0.75rem;
-    border-radius: var(--radius-xl);
-  }
 }
 
 @media (min-width: 1024px) {
   .card-preview-wrapper {
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
     max-width: none;
     padding: 1.25rem;
     box-shadow: var(--shadow-lg);
@@ -578,21 +635,35 @@ button.step-pill.is-active .step-pill-title {
 .preview-canvas-container {
   position: relative;
   overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
   background: #111827;
   user-select: none;
   touch-action: none;
   aspect-ratio: 1080 / 1440;
-  max-height: 30vh;
+  max-height: 25vh;
+  max-width: 195px;
   width: auto;
   margin: 0 auto;
 }
 
 /* In Step 3 on mobile: expand to hero presentation */
 .step-3-preview .preview-canvas-container {
-  max-height: 44vh;
-  max-width: 320px;
+  max-height: 38vh;
+  max-width: 290px;
+}
+
+@media (min-width: 640px) {
+  .preview-canvas-container {
+    max-height: 32vh;
+    max-width: 250px;
+    border-radius: 12px;
+  }
+
+  .step-3-preview .preview-canvas-container {
+    max-height: 44vh;
+    max-width: 330px;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -760,23 +831,33 @@ button.step-pill.is-active .step-pill-title {
   object-fit: contain;
 }
 
-.canvas-drag-hint {
-  position: absolute;
-  bottom: 14px;
-  right: 14px;
-  background: rgba(7, 15, 43, 0.88);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(244, 185, 43, 0.4);
-  color: #FFFFFF;
-  padding: 0.4rem 0.75rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.76rem;
-  font-weight: 600;
+/* Canvas Under-Hint (Clean helper below card, not on top of artwork) */
+.canvas-under-hint {
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 0.45rem;
-  pointer-events: none;
-  animation: fadeIn 0.3s ease-out;
+  margin-top: 0.35rem;
+  width: 100%;
+}
+
+.under-hint-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.73rem;
+  font-weight: 500;
+  color: var(--color-gold-warm);
+  background: rgba(244, 185, 43, 0.08);
+  border: 1px solid rgba(244, 185, 43, 0.22);
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  line-height: 1.2;
+}
+
+.under-hint-pill.text-hint {
+  color: #93C5FD;
+  background: rgba(59, 130, 246, 0.08);
+  border-color: rgba(59, 130, 246, 0.25);
 }
 
 .canvas-export-overlay {
@@ -799,17 +880,37 @@ button.step-pill.is-active .step-pill-title {
 .controls-column {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 0.75rem;
 }
 
-/* Control Sections */
+@media (min-width: 1024px) {
+  .controls-column {
+    gap: 1.5rem;
+  }
+}
+
+/* Control Sections (Mobile-First Compact Spacing) */
 .control-section {
   background: var(--color-bg-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  padding: 1.5rem;
-  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-lg);
+  padding: 0.85rem 1rem;
+  box-shadow: var(--shadow-sm);
   transition: var(--transition);
+}
+
+@media (min-width: 640px) {
+  .control-section {
+    padding: 1.25rem;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+@media (min-width: 1024px) {
+  .control-section {
+    padding: 1.5rem;
+  }
 }
 
 .control-section:hover {
@@ -820,26 +921,34 @@ button.step-pill.is-active .step-pill-title {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.65rem;
+}
+
+.section-header.compact {
+  margin-bottom: 0.45rem;
 }
 
 .section-label {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
   font-family: var(--font-family-display);
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   font-weight: 800;
   color: var(--color-text-main);
 }
 
+.section-label.compact {
+  font-size: 0.85rem;
+}
+
 .step-badge {
-  width: 26px;
-  height: 26px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   background: var(--color-gold-warm);
   color: #070F2B;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 900;
   display: inline-flex;
   align-items: center;
@@ -851,11 +960,105 @@ button.step-pill.is-active .step-pill-title {
   color: var(--color-gold-warm);
 }
 
-/* Photo Uploader Dropzone */
-.dropzone {
+/* Photo Uploader Sleek Ready Bar */
+.photo-compact-ready-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: var(--radius-md);
+  padding: 0.5rem 0.75rem;
+  min-height: 44px;
+}
+
+.photo-ready-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.photo-ready-badge {
+  color: #10B981;
+  display: flex;
+  align-items: center;
+}
+
+.photo-ready-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.photo-ready-title {
+  font-weight: 700;
+  font-size: 0.84rem;
+  color: #FFFFFF;
+  line-height: 1.2;
+}
+
+.photo-ready-hint {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+}
+
+.photo-ready-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.btn-change-photo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-gold-warm);
+  background: rgba(244, 185, 43, 0.12);
+  border: 1px solid rgba(244, 185, 43, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 0.35rem 0.65rem;
+  min-height: 36px;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: all 0.2s ease;
+}
+
+.btn-change-photo:hover,
+.btn-change-photo:active {
+  background: rgba(244, 185, 43, 0.22);
+  border-color: var(--color-gold-warm);
+}
+
+.btn-remove-photo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  color: #F87171;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: all 0.2s ease;
+}
+
+.btn-remove-photo:hover,
+.btn-remove-photo:active {
+  background: rgba(239, 68, 68, 0.22);
+}
+
+/* Compact Dropzone (When no photo) */
+.dropzone.compact-dropzone {
   border: 2px dashed var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: 1.85rem 1rem;
+  border-radius: var(--radius-md);
+  padding: 0.85rem 0.75rem;
   text-align: center;
   cursor: pointer;
   background: var(--color-bg-input);
@@ -867,21 +1070,16 @@ button.step-pill.is-active .step-pill-title {
   background: rgba(244, 185, 43, 0.06);
 }
 
-.dropzone.has-file {
-  border-style: solid;
-  border-color: rgba(244, 185, 43, 0.5);
-}
-
-.dropzone-content {
+.dropzone-content.compact {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 0.75rem;
 }
 
-.dropzone-icon-circle {
-  width: 50px;
-  height: 50px;
+.dropzone-icon-circle.compact {
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   background: var(--color-bg-card);
   color: var(--color-gold-warm);
@@ -889,28 +1087,31 @@ button.step-pill.is-active .step-pill-title {
   align-items: center;
   justify-content: center;
   border: 1px solid var(--color-border);
+  flex-shrink: 0;
 }
 
 .dropzone-title {
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   color: var(--color-text-main);
+  line-height: 1.2;
 }
 
 .dropzone-hint {
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   color: var(--color-text-muted);
+  margin-top: 2px;
 }
 
 /* Status Messages */
 .status-message {
-  margin-top: 0.75rem;
-  padding: 0.65rem 0.9rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.75rem;
   border-radius: var(--radius-sm);
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.45rem;
 }
 
 .status-message.error {
@@ -931,36 +1132,17 @@ button.step-pill.is-active .step-pill-title {
   border: 1px solid rgba(244, 185, 43, 0.25);
 }
 
-.btn-text-danger {
-  background: none;
-  border: none;
-  color: #F87171;
-  font-size: 0.8rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  cursor: pointer;
-  padding: 0.3rem 0.6rem;
-  border-radius: var(--radius-sm);
-  transition: var(--transition);
-}
-
-.btn-text-danger:hover {
-  background: rgba(239, 68, 68, 0.15);
-}
-
 .btn-text-secondary {
   background: none;
   border: none;
   color: var(--color-text-muted);
-  font-size: 0.8rem;
+  font-size: 0.76rem;
   font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.3rem;
   cursor: pointer;
-  padding: 0.3rem 0.6rem;
+  padding: 0.25rem 0.5rem;
   border-radius: var(--radius-sm);
   transition: var(--transition);
 }
@@ -970,84 +1152,74 @@ button.step-pill.is-active .step-pill-title {
   background: var(--color-bg-card);
 }
 
-/* Photo Adjusters */
-.photo-adjuster-section {
-  animation: fadeIn 0.3s ease-out;
+/* Photo Adjusters (Compact Mobile) */
+.photo-adjuster-section.compact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  animation: fadeIn 0.2s ease-out;
 }
 
-.control-field {
-  margin-bottom: 1rem;
+.zoom-control-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
 }
 
-.field-header {
+.field-header.compact {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.4rem;
-  font-size: 0.82rem;
+  font-size: 0.78rem;
 }
 
-.field-label {
+.field-label.compact {
   color: var(--color-text-muted);
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.35rem;
+  font-weight: 600;
 }
 
-.field-value {
+.field-value.compact {
   color: var(--color-gold-warm);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
+  font-size: 0.78rem;
 }
 
-.range-slider {
-  width: 100%;
-  appearance: none;
-  background: var(--color-bg-input);
-  height: 6px;
-  border-radius: 3px;
-  outline: none;
+.control-field.compact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
-.range-slider::-webkit-slider-thumb {
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: var(--color-gold-warm);
-  cursor: pointer;
-  box-shadow: 0 0 10px rgba(244, 185, 43, 0.5);
-  transition: var(--transition);
-}
-
-.range-slider::-webkit-slider-thumb:hover {
-  transform: scale(1.15);
-}
-
-/* Nudge Pad */
-.nudge-pad-container {
+/* Compact Nudge Row */
+.nudge-pad-compact-wrap {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--color-border);
-  margin-top: 0.75rem;
-}
-
-.nudge-pad-label {
-  font-size: 0.8rem;
-  color: var(--color-text-muted);
-}
-
-.nudge-buttons {
-  display: flex;
   gap: 0.5rem;
+  padding-top: 0.45rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
   flex-wrap: wrap;
 }
 
+.nudge-hint {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+}
+
+.nudge-buttons.compact {
+  display: flex;
+  gap: 0.35rem;
+}
+
 .btn-nudge {
-  min-width: 44px;
-  min-height: 44px;
+  min-width: 40px;
+  min-height: 40px;
+  width: 40px;
+  height: 40px;
   border-radius: var(--radius-sm);
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
@@ -1076,26 +1248,93 @@ button.step-pill.is-active .step-pill-title {
   color: var(--color-gold-warm);
 }
 
-/* Form Controls (Name & Committee) */
-.input-group {
-  margin-bottom: 1.25rem;
-}
-
-.input-label {
+/* Accordion Toggle Tuning Button */
+.btn-toggle-tuning {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 40px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.4rem 0.75rem;
+  color: var(--color-text-muted);
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-toggle-tuning.subtle {
+  border-style: dashed;
+  font-size: 0.75rem;
+  min-height: 34px;
+  color: var(--color-text-subtle);
+}
+
+.btn-toggle-tuning:hover,
+.btn-toggle-tuning.has-custom {
+  color: var(--color-gold-warm);
+  border-color: rgba(244, 185, 43, 0.35);
+  background: rgba(244, 185, 43, 0.06);
+}
+
+.toggle-tuning-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.custom-badge {
+  font-size: 0.65rem;
+  padding: 0.12rem 0.45rem;
+  background: var(--color-gold-warm);
+  color: #070F2B;
+  border-radius: 10px;
+  font-weight: 700;
+}
+
+.advanced-sliders-wrap {
+  margin-top: 0.4rem;
+  padding-top: 0.4rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
   gap: 0.45rem;
-  font-size: 0.85rem;
+}
+
+/* Form Controls (Compact Mobile) */
+.form-controls-section.compact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.input-group.compact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 0;
+}
+
+.input-label.compact {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
   font-weight: 700;
   color: #E2E8F0;
-  margin-bottom: 0.45rem;
 }
 
 .inline-icon {
   color: var(--color-gold-warm);
 }
 
-.input-wrapper {
+.input-wrapper.compact {
   position: relative;
   display: flex;
   align-items: center;
@@ -1105,13 +1344,13 @@ button.step-pill.is-active .step-pill-title {
   width: 100%;
   background: var(--color-bg-input);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: 0.85rem 1rem;
-  padding-right: 3.5rem;
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.85rem;
+  padding-right: 3.2rem;
   color: var(--color-text-main);
   font-size: 16px; /* 16px strictly prevents iOS Safari auto-zoom */
   font-family: var(--font-family-base);
-  min-height: 48px;
+  min-height: 46px;
   outline: none;
   transition: var(--transition);
 }
@@ -1123,30 +1362,64 @@ button.step-pill.is-active .step-pill-title {
 
 .char-counter {
   position: absolute;
-  right: 0.85rem;
-  font-size: 0.75rem;
+  right: 0.75rem;
+  font-size: 0.72rem;
   color: var(--color-text-subtle);
   pointer-events: none;
 }
 
-/* Name Font Size Adjuster */
-.font-size-adjuster {
-  margin-top: 0.65rem;
-  background: rgba(255, 255, 255, 0.025);
+.select-wrapper.compact {
+  position: relative;
+}
+
+.select-input {
+  width: 100%;
+  background: var(--color-bg-input);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   padding: 0.65rem 0.85rem;
+  color: var(--color-text-main);
+  font-size: 16px; /* 16px strictly prevents iOS Safari auto-zoom */
+  font-family: var(--font-family-base);
+  font-weight: 600;
+  min-height: 46px;
+  outline: none;
+  cursor: pointer;
+  transition: var(--transition);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23F4B92B' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: calc(100% - 1rem) center;
 }
 
-.font-size-header {
+.select-input:focus {
+  border-color: var(--color-gold-warm);
+  box-shadow: 0 0 0 3px rgba(244, 185, 43, 0.18);
+}
+
+.select-input option {
+  background: var(--color-bg-surface);
+  color: var(--color-text-main);
+  padding: 0.5rem;
+}
+
+/* Name Font Size Adjuster */
+.font-size-adjuster.compact {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.45rem 0.65rem;
+}
+
+.font-size-header.compact {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 0.45rem;
-  font-size: 0.8rem;
+  margin-bottom: 0.35rem;
+  font-size: 0.78rem;
 }
 
-.font-size-label {
+.font-size-label.compact {
   color: var(--color-text-muted);
   display: flex;
   align-items: center;
@@ -1154,13 +1427,13 @@ button.step-pill.is-active .step-pill-title {
   font-weight: 600;
 }
 
-.font-size-value {
+.font-size-value.compact {
   color: var(--color-gold-warm);
   font-weight: 700;
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-variant-numeric: tabular-nums;
   background: rgba(244, 185, 43, 0.12);
-  padding: 0.12rem 0.5rem;
+  padding: 0.1rem 0.45rem;
   border-radius: var(--radius-sm);
   border: 1px solid rgba(244, 185, 43, 0.25);
 }
@@ -1168,12 +1441,18 @@ button.step-pill.is-active .step-pill-title {
 .font-size-slider-row {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.5rem;
+}
+
+.font-size-slider-row.compact {
+  gap: 0.35rem;
 }
 
 .font-size-btn {
-  min-width: 42px;
-  min-height: 42px;
+  min-width: 40px;
+  min-height: 40px;
+  width: 40px;
+  height: 40px;
   border-radius: var(--radius-sm);
   background: var(--color-bg-input);
   border: 1px solid var(--color-border);
@@ -1203,17 +1482,17 @@ button.step-pill.is-active .step-pill-title {
   flex: 1;
   appearance: none;
   background: var(--color-bg-input);
-  height: 8px;
-  border-radius: 4px;
+  height: 6px;
+  border-radius: 3px;
   outline: none;
-  padding: 8px 0;
+  padding: 6px 0;
   touch-action: manipulation;
 }
 
 .font-size-slider::-webkit-slider-thumb {
   appearance: none;
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   background: var(--color-gold-warm);
   cursor: pointer;
@@ -1222,49 +1501,59 @@ button.step-pill.is-active .step-pill-title {
   transition: var(--transition);
 }
 
-.font-size-slider::-webkit-slider-thumb:hover {
-  transform: scale(1.15);
+/* Position Tuning Accordion Body */
+.position-tuning-accordion {
+  margin-top: 0.2rem;
 }
 
-/* Position Adjuster Block */
+.position-tuning-body {
+  margin-top: 0.45rem;
+  padding: 0.65rem;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  animation: fadeInStep 0.2s ease-out;
+}
+
+.tuning-hint-text {
+  font-size: 0.72rem;
+  color: var(--color-gold-warm);
+  line-height: 1.35;
+}
+
 .position-adjuster-block {
-  margin-top: 0.75rem;
   background: rgba(255, 255, 255, 0.025);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
-  padding: 0.65rem 0.85rem;
+  padding: 0.5rem 0.65rem;
 }
 
-.position-adjuster-block.committee-position-block {
-  margin-top: 0.75rem;
-}
-
-.position-header {
+.position-header.compact {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 0.55rem;
-  font-size: 0.8rem;
+  margin-bottom: 0.4rem;
+  font-size: 0.76rem;
 }
 
-.position-label {
+.position-label.compact {
   color: var(--color-text-muted);
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
   font-weight: 600;
 }
 
 .btn-reset-position {
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0.25rem;
   background: transparent;
   color: var(--color-text-muted);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
-  padding: 0.18rem 0.45rem;
-  font-size: 0.72rem;
+  padding: 0.15rem 0.4rem;
+  font-size: 0.7rem;
   font-family: inherit;
   font-weight: 600;
   cursor: pointer;
@@ -1280,20 +1569,20 @@ button.step-pill.is-active .step-pill-title {
 .position-axis-grid {
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
+  gap: 0.45rem;
 }
 
 .axis-control-item {
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: 0.25rem;
 }
 
-.axis-header {
+.axis-header.compact {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.74rem;
+  font-size: 0.72rem;
 }
 
 .axis-title {
@@ -1304,42 +1593,70 @@ button.step-pill.is-active .step-pill-title {
 .axis-value {
   color: #38BDF8;
   font-weight: 700;
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   font-variant-numeric: tabular-nums;
 }
 
-.select-wrapper {
-  position: relative;
+.step-navigation-footer.compact {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 0.35rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-border);
 }
 
-.select-input {
-  width: 100%;
-  background: var(--color-bg-input);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: 0.85rem 1rem;
-  color: var(--color-text-main);
-  font-size: 0.95rem;
-  font-family: var(--font-family-base);
+.btn-step-next {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #F4B92B 0%, #D8981A 100%);
+  color: #070F2B;
+  font-family: inherit;
   font-weight: 700;
-  outline: none;
+  font-size: 0.92rem;
+  padding: 0.75rem 1.4rem;
+  border-radius: var(--radius-md);
+  border: none;
   cursor: pointer;
-  transition: var(--transition);
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23F4B92B' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: calc(100% - 1.25rem) center;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(244, 185, 43, 0.25);
+  min-height: 48px;
 }
 
-.select-input:focus {
-  border-color: var(--color-gold-warm);
-  box-shadow: 0 0 0 3px rgba(244, 185, 43, 0.18);
+.btn-step-next:hover {
+  background: linear-gradient(135deg, #FFC947 0%, #EAA722 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(244, 185, 43, 0.35);
 }
 
-.select-input option {
-  background: var(--color-bg-surface);
+.btn-step-next.full-width {
+  width: 100%;
+}
+
+.btn-step-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.88rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 48px;
+}
+
+.btn-step-back:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
   color: var(--color-text-main);
-  padding: 0.5rem;
 }
 
 /* Export CTA */
