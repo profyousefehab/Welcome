@@ -4,7 +4,7 @@
  * Strict list of authorized committees as defined in project requirements.
  */
 export const APPROVED_COMMITTEES = [
-  'SOCIAL MEDIA',
+  'SOCIAL MEDIA & DESIGN',
   'PHOTO & VIDEO',
   'IT',
   'HUMAN RESOURCES',
@@ -18,5 +18,5 @@ export type CommitteeType = typeof APPROVED_COMMITTEES[number];
 /**
  * Default selected committee for initial state
  */
-export const DEFAULT_COMMITTEE: CommitteeType = 'SOCIAL MEDIA';
+export const DEFAULT_COMMITTEE: CommitteeType = 'SOCIAL MEDIA & DESIGN';
 

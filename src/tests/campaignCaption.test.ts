@@ -25,8 +25,9 @@ describe('Campaign Caption Generator', () => {
   });
 
   it('includes lightning bolt emoji and official hashtag group', () => {
-    const caption = generateCampaignCaption('SOCIAL MEDIA');
+    const caption = generateCampaignCaption('SOCIAL MEDIA & DESIGN');
     expect(caption).toContain("The journey starts now. ⚡");
+    expect(caption).toContain("as a Social Media & Design Beta Member!");
     expect(caption).toContain("#Enactusau #Enactusassiut #Enactus #NewBeginnings #NewMember #Leadership #Teamwork #MakingAnImpact");
   });
 });

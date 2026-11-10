@@ -107,7 +107,7 @@ describe('Vintage Postage Stamp Template (Card2.psd)', () => {
       {
         fullName: 'Test Student',
         nameFontSize: 46,
-        committee: 'SOCIAL MEDIA',
+        committee: 'SOCIAL MEDIA & DESIGN',
         photoImage: null,
         photoUrl: null,
         photoPosition: { x: 0, y: 0, zoom: 1 },
@@ -157,7 +157,7 @@ describe('Vintage Postage Stamp Template (Card2.psd)', () => {
         fullName: 'Offset Student',
         nameFontSize: 80,
         namePosition: { x: 12, y: -8 },
-        committee: 'SOCIAL MEDIA',
+        committee: 'SOCIAL MEDIA & DESIGN',
         committeePosition: { x: -6, y: 4 },
         photoImage: null,
         photoUrl: null,
@@ -172,7 +172,7 @@ describe('Vintage Postage Stamp Template (Card2.psd)', () => {
     expect(nameRender?.x).toBe(557 + 12);
     expect(nameRender?.y).toBe(1079 - 8);
 
-    const committeeRender = filledTexts.find((t) => t.text.includes('SOCIAL MEDIA'));
+    const committeeRender = filledTexts.find((t) => t.text.includes('SOCIAL MEDIA & DESIGN'));
     expect(committeeRender).toBeDefined();
     // Expected x = 557 - 6 = 551, y = 1150 + 4 = 1154
     expect(committeeRender?.x).toBe(557 - 6);

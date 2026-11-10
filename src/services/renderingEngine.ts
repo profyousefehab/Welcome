@@ -5,7 +5,7 @@ const imageCache = new Map<string, HTMLImageElement>();
 let fontsLoadedPromise: Promise<void> | null = null;
 
 /**
- * Ensure custom typography fonts (Neulis suite) are preloaded and registered
+ * Ensure custom typography fonts (SF Pro Display suite) are preloaded and registered
  */
 export async function ensureCustomFontsLoaded(): Promise<void> {
   if (typeof document === 'undefined') return;
@@ -19,17 +19,9 @@ export async function ensureCustomFontsLoaded(): Promise<void> {
               weight: '700',
               style: 'italic',
             }),
-            new FontFace('SF Pro Display Bold Italic', 'url(/SF-Pro-Display-BoldItalic.otf)', {
-              weight: '400',
-              style: 'normal',
-            }),
             new FontFace('SFProDisplay-BoldItalic', 'url(/SF-Pro-Display-BoldItalic.otf)', {
               weight: '700',
               style: 'italic',
-            }),
-            new FontFace('SFProDisplay-BoldItalic', 'url(/SF-Pro-Display-BoldItalic.otf)', {
-              weight: '400',
-              style: 'normal',
             }),
             new FontFace('SF Pro Display', 'url(/SF-Pro-Display-BoldItalic.otf)', {
               weight: '700',

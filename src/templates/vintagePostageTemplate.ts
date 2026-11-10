@@ -1,8 +1,8 @@
 import { TemplateConfig } from '../types/template';
-import vintageBgUrl from '../assets/vintage/vintage_bg_clean.png';
-import welcomeOverlayUrl from '../assets/vintage/welcome_overlay_clean.png';
-import sealStampUrl from '../assets/vintage/seal_stamp.png';
-import committeeScriptUrl from '../assets/vintage/committee_script.png';
+import vintageBgUrl from '../assets/vintage/vintage_bg_clean.webp';
+import welcomeOverlayUrl from '../assets/vintage/welcome_overlay_clean.webp';
+import sealStampUrl from '../assets/vintage/seal_stamp.webp';
+import committeeScriptUrl from '../assets/vintage/committee_script.webp';
 
 const VINTAGE_AVATAR_PLACEHOLDER = `data:image/svg+xml;utf8,${encodeURIComponent(`
 <svg xmlns="http://www.w3.org/2000/svg" width="571" height="736" viewBox="0 0 571 736">

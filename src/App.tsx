@@ -8,7 +8,7 @@ import { PhotoUploader } from './components/PhotoUploader';
 import { PhotoAdjuster } from './components/PhotoAdjuster';
 import { FormControls } from './components/FormControls';
 import { CaptionBox } from './components/CaptionBox';
-import logoEnactusAu from './assets/logoEnactusAu_web.png';
+import logoEnactusAu from './assets/logoEnactusAu_web.webp';
 import samplePortraitUrl from './assets/sample_portrait.jpg';
 import { ArrowRight, ArrowLeft, Check, Download, CheckCircle, RotateCcw } from 'lucide-react';
 
