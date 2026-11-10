@@ -15,27 +15,27 @@ export async function ensureCustomFontsLoaded(): Promise<void> {
       try {
         if (typeof FontFace !== 'undefined') {
           const fontDefinitions = [
-            new FontFace('SF Pro Display Bold Italic', 'url(/SF-Pro-Display-BoldItalic.otf)', {
+            new FontFace('SF Pro Display Bold Italic', 'url(/SF-Pro-Display-BoldItalic.woff2)', {
               weight: '700',
               style: 'italic',
             }),
-            new FontFace('SFProDisplay-BoldItalic', 'url(/SF-Pro-Display-BoldItalic.otf)', {
+            new FontFace('SFProDisplay-BoldItalic', 'url(/SF-Pro-Display-BoldItalic.woff2)', {
               weight: '700',
               style: 'italic',
             }),
-            new FontFace('SF Pro Display', 'url(/SF-Pro-Display-BoldItalic.otf)', {
+            new FontFace('SF Pro Display', 'url(/SF-Pro-Display-BoldItalic.woff2)', {
               weight: '700',
               style: 'italic',
             }),
-            new FontFace('SF Pro Display', 'url(/SF-Pro-Display-Bold.otf)', {
+            new FontFace('SF Pro Display', 'url(/SF-Pro-Display-Bold.woff2)', {
               weight: '700',
               style: 'normal',
             }),
-            new FontFace('SF Pro Display', 'url(/SF-Pro-Display-Medium.otf)', {
+            new FontFace('SF Pro Display', 'url(/SF-Pro-Display-Medium.woff2)', {
               weight: '500',
               style: 'normal',
             }),
-            new FontFace('SF Pro Display', 'url(/SF-Pro-Display-Regular.otf)', {
+            new FontFace('SF Pro Display', 'url(/SF-Pro-Display-Regular.woff2)', {
               weight: '400',
               style: 'normal',
             }),
