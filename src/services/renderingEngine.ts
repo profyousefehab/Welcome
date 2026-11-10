@@ -293,9 +293,12 @@ function renderOverlayLayer(
 
   let posX = layer.x;
   let posY = layer.y;
-  if (layer.id === 'layer-committee-overlay' && userData.committeePosition) {
-    posX += userData.committeePosition.x;
-    posY += userData.committeePosition.y;
+  if (layer.id === 'layer-committee-overlay') {
+    if (!userData.committee?.trim()) return;
+    if (userData.committeePosition) {
+      posX += userData.committeePosition.x;
+      posY += userData.committeePosition.y;
+    }
   }
 
   ctx.drawImage(img, posX, posY, layer.width, layer.height);
@@ -317,7 +320,7 @@ function renderTextLayer(
   if (role === 'name') {
     text = userData.fullName?.trim() || 'MEMBER FULL NAME';
   } else if (role === 'committee') {
-    text = userData.committee?.trim() || 'COMMITTEE NAME';
+    text = userData.committee?.trim() || '';
   } else if (role === 'static') {
     text = layer.staticText || '';
   }

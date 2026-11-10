@@ -27,10 +27,10 @@ export const App: React.FC = () => {
       y: 0,
       zoom: 1.0,
     },
-    fullName: 'Yousef Ehab',
+    fullName: 'Your Name',
     nameFontSize: 80,
     namePosition: { x: 0, y: 0 },
-    committee: 'SOCIAL MEDIA',
+    committee: '',
     committeePosition: { x: 0, y: 0 },
   });
 

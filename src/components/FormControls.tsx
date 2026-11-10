@@ -66,7 +66,7 @@ export const FormControls: React.FC<FormControlsProps> = ({
             id="fullNameInput"
             type="text"
             className="text-input"
-            placeholder="e.g. Yousef Ehab"
+            placeholder="e.g. Your Name"
             value={fullName}
             maxLength={40}
             onChange={(e) => onFullNameChange(e.target.value)}
@@ -88,6 +88,7 @@ export const FormControls: React.FC<FormControlsProps> = ({
             value={committee}
             onChange={(e) => onCommitteeChange(e.target.value)}
           >
+            <option value="">Select your committee...</option>
             {APPROVED_COMMITTEES.map((comm) => (
               <option key={comm} value={comm}>
                 {comm}
