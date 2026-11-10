@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { generateCampaignCaption, ENACTUS_LINKEDIN_URL } from '../constants/campaignCaption';
-import { Copy, Check, Share2, ExternalLink } from 'lucide-react';
+import { generateCampaignCaption } from '../constants/campaignCaption';
+import { Copy, Check, Share2, Image as ImageIcon } from 'lucide-react';
 
 interface CaptionBoxProps {
   committee: string;
+  onGetCardBlob?: () => Promise<{ blob: Blob; filename: string }>;
 }
 
 const LinkedInIcon: React.FC<{ size?: number }> = ({ size = 18 }) => (
@@ -19,11 +20,14 @@ const LinkedInIcon: React.FC<{ size?: number }> = ({ size = 18 }) => (
   </svg>
 );
 
-export const CaptionBox: React.FC<CaptionBoxProps> = ({ committee }) => {
+export const CaptionBox: React.FC<CaptionBoxProps> = ({ committee, onGetCardBlob }) => {
   const [copied, setCopied] = useState(false);
+  const [isSharing, setIsSharing] = useState(false);
+  const [shareNotice, setShareNotice] = useState<string | null>(null);
+
   const caption = generateCampaignCaption(committee);
 
-  const copyToClipboard = async () => {
+  const copyToClipboard = async (): Promise<boolean> => {
     try {
       await navigator.clipboard.writeText(caption);
       setCopied(true);
@@ -42,13 +46,80 @@ export const CaptionBox: React.FC<CaptionBoxProps> = ({ committee }) => {
     }
   };
 
-  const handleOpenLinkedIn = async () => {
-    // Copy the text to clipboard so it's ready to paste if needed
-    await copyToClipboard();
+  const handlePostOnLinkedIn = async () => {
+    setIsSharing(true);
+    setShareNotice(null);
 
-    // Open LinkedIn feed with the post composer active and caption pre-filled
-    const linkedInIntentUrl = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(caption)}`;
-    window.open(linkedInIntentUrl, '_blank', 'noopener,noreferrer');
+    try {
+      let cardBlob: Blob | null = null;
+      let cardFilename = 'Enactus_MembershipCard.png';
+
+      if (onGetCardBlob) {
+        const result = await onGetCardBlob();
+        cardBlob = result.blob;
+        cardFilename = result.filename;
+      }
+
+      // Check if native Web Share API supports file sharing (mobile / supported browsers)
+      if (cardBlob && typeof navigator.share === 'function') {
+        const file = new File([cardBlob], cardFilename, { type: 'image/png' });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          try {
+            await navigator.share({
+              title: 'Enactus Assiut Membership Card',
+              text: caption,
+              files: [file],
+            });
+            setIsSharing(false);
+            return;
+          } catch (err) {
+            // If user aborted/dismissed the share sheet, stop cleanly
+            if ((err as Error)?.name === 'AbortError') {
+              setIsSharing(false);
+              return;
+            }
+            // Otherwise, fall through to browser desktop sharing method
+          }
+        }
+      }
+
+      // Desktop / Browser Fallback Flow:
+      // 1. Auto-download the card image so the user has the PNG ready to attach
+      if (cardBlob) {
+        const downloadUrl = URL.createObjectURL(cardBlob);
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.download = cardFilename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(downloadUrl);
+      }
+
+      // 2. Copy the caption text to clipboard
+      await copyToClipboard();
+
+      // 3. Open LinkedIn's feed with post composer
+      const linkedInIntentUrl = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(caption)}`;
+      window.open(linkedInIntentUrl, '_blank', 'noopener,noreferrer');
+
+      // 4. Show friendly guidance notice
+      setShareNotice(
+        'Card image downloaded & caption copied! On LinkedIn, paste the caption and attach your downloaded card photo.'
+      );
+      setTimeout(() => setShareNotice(null), 8000);
+    } catch (err) {
+      console.error('LinkedIn share error:', err);
+      // Fallback: at least open LinkedIn with caption
+      await copyToClipboard();
+      window.open(
+        `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(caption)}`,
+        '_blank',
+        'noopener,noreferrer'
+      );
+    } finally {
+      setIsSharing(false);
+    }
   };
 
   return (
@@ -56,27 +127,35 @@ export const CaptionBox: React.FC<CaptionBoxProps> = ({ committee }) => {
       <div className="section-header">
         <label className="section-label">
           <Share2 size={16} className="inline-icon" />
-          <span>Social Media Caption</span>
+          <span>Social Media Caption &amp; Share</span>
         </label>
       </div>
 
       <p className="caption-instruction">
-        Ready to share with your membership card on LinkedIn, Facebook, and Instagram:
+        Share your card on LinkedIn with official @Enactus Assiut tagging:
       </p>
 
       <div className="caption-display-box">
         <pre className="caption-text">{caption}</pre>
       </div>
 
+      {shareNotice && (
+        <div className="caption-share-notice" role="alert">
+          <ImageIcon size={16} className="notice-icon" />
+          <span>{shareNotice}</span>
+        </div>
+      )}
+
       <div className="caption-actions">
         <button
           type="button"
           className="btn-linkedin-post"
-          onClick={handleOpenLinkedIn}
-          title="Copies caption and opens LinkedIn to create a post"
+          onClick={handlePostOnLinkedIn}
+          disabled={isSharing}
+          title="Shares your card image & caption on LinkedIn"
         >
           <LinkedInIcon size={18} />
-          <span>Post on LinkedIn</span>
+          <span>{isSharing ? 'Preparing Post...' : 'Post on LinkedIn with Photo'}</span>
         </button>
 
         <button
@@ -96,17 +175,6 @@ export const CaptionBox: React.FC<CaptionBoxProps> = ({ committee }) => {
             </>
           )}
         </button>
-
-        <a
-          href={ENACTUS_LINKEDIN_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="caption-page-link"
-          title="Visit Enactus Assiut LinkedIn page"
-        >
-          <ExternalLink size={13} />
-          <span>Enactus Assiut Page</span>
-        </a>
       </div>
     </div>
   );

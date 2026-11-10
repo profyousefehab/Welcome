@@ -1788,6 +1788,26 @@ button.step-pill.is-active .step-pill-title {
   color: #FFFFFF;
 }
 
+.caption-share-notice {
+  margin-top: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: rgba(10, 102, 194, 0.15);
+  border: 1px solid rgba(10, 102, 194, 0.4);
+  border-radius: var(--radius-md);
+  color: #90caf9;
+  font-size: 0.84rem;
+  line-height: 1.45;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.caption-share-notice .notice-icon {
+  flex-shrink: 0;
+  color: #2196f3;
+}
+
 .caption-page-link {
   font-size: 0.82rem;
   color: var(--color-text-muted);

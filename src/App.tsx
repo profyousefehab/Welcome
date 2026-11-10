@@ -324,7 +324,10 @@ export const App: React.FC = () => {
                   </div>
 
                   {/* Campaign Caption Box */}
-                  <CaptionBox committee={userData.committee} />
+                  <CaptionBox
+                    committee={userData.committee}
+                    onGetCardBlob={() => exportHighResolutionPng(activeTemplate, userData)}
+                  />
 
                   {/* Step 3 Navigation Footer */}
                   <div className="step-navigation-footer">

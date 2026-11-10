@@ -3,12 +3,13 @@ import { generateCampaignCaption, ENACTUS_LINKEDIN_URL } from '../constants/camp
 import { APPROVED_COMMITTEES } from '../constants/committees';
 
 describe('Campaign Caption Generator', () => {
-  it('correctly inserts each approved committee into the updated Beta Member caption', () => {
+  it('correctly inserts each approved committee into the Beta Member caption with @Enactus Assiut tag', () => {
     APPROVED_COMMITTEES.forEach((committee) => {
       const caption = generateCampaignCaption(committee);
       expect(caption).toContain("@Enactus Assiut");
       expect(caption).toContain("Beta Member!");
-      expect(caption).toContain(ENACTUS_LINKEDIN_URL);
+      // Caption must NOT contain the raw URL
+      expect(caption).not.toContain(ENACTUS_LINKEDIN_URL);
       expect(caption).toContain('#Enactusau #Enactusassiut #Enactus #NewBeginnings #NewMember #Leadership #Teamwork #MakingAnImpact');
     });
   });
@@ -23,9 +24,9 @@ describe('Campaign Caption Generator', () => {
     expect(caption).toContain("as an Enactus Team Beta Member!");
   });
 
-  it('includes lightning bolt emoji and official Enactus LinkedIn link', () => {
+  it('includes lightning bolt emoji and official hashtag group', () => {
     const caption = generateCampaignCaption('SOCIAL MEDIA');
     expect(caption).toContain("The journey starts now. ⚡");
-    expect(caption).toContain("https://www.linkedin.com/company/enactus-assiut/");
+    expect(caption).toContain("#Enactusau #Enactusassiut #Enactus #NewBeginnings #NewMember #Leadership #Teamwork #MakingAnImpact");
   });
 });

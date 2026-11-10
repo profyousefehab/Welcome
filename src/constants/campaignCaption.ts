@@ -2,6 +2,7 @@
  * Official Campaign Announcement Copy
  * 
  * Standardized announcement text for incoming Enactus Assiut Beta Members.
+ * Mentions @Enactus Assiut directly for tagging on LinkedIn.
  */
 
 export const ENACTUS_LINKEDIN_URL = 'https://www.linkedin.com/company/enactus-assiut/';
@@ -29,8 +30,6 @@ This is more than just joining a team; it's an opportunity to grow, challenge my
 I'm looking forward to an incredible journey filled with learning, collaboration, unforgettable experiences, and positive change.
 
 The journey starts now. ⚡
-
-${ENACTUS_LINKEDIN_URL}
 
 #Enactusau #Enactusassiut #Enactus #NewBeginnings #NewMember #Leadership #Teamwork #MakingAnImpact`;
 }
