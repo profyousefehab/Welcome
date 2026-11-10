@@ -19,6 +19,16 @@ describe('Campaign Caption Generator', () => {
     expect(caption).toContain("as an IT Beta Member!");
   });
 
+  it('correctly formats HR with indefinite article "an"', () => {
+    const caption = generateCampaignCaption('HR');
+    expect(caption).toContain("as an HR Beta Member!");
+  });
+
+  it('correctly formats PR & Business Development', () => {
+    const caption = generateCampaignCaption('PR & BUSINESS DEVELOPMENT');
+    expect(caption).toContain("as a PR & Business Development Beta Member!");
+  });
+
   it('provides a sensible fallback if committee is empty string', () => {
     const caption = generateCampaignCaption('');
     expect(caption).toContain("as an Enactus Team Beta Member!");

@@ -7,8 +7,8 @@ describe('Approved Committees List', () => {
       'SOCIAL MEDIA & DESIGN',
       'PHOTO & VIDEO',
       'IT',
-      'HUMAN RESOURCES',
-      'PUBLIC RELATIONS',
+      'HR',
+      'PR & BUSINESS DEVELOPMENT',
       'PRESENTATION',
       'PROJECT',
     ];

@@ -10,18 +10,24 @@ export const ENACTUS_LINKEDIN_URL = 'https://www.linkedin.com/company/enactus-as
 export function formatCommitteeForCaption(committee: string): string {
   const raw = committee?.trim() || 'Enactus Team';
   if (raw.toUpperCase() === 'IT') return 'IT';
+  if (raw.toUpperCase() === 'HR') return 'HR';
 
   const clean = raw.replace(/\s+committee$/i, '');
   return clean
     .toLowerCase()
     .split(' ')
-    .map((word) => (word === 'it' ? 'IT' : word.charAt(0).toUpperCase() + word.slice(1)))
+    .map((word) => {
+      if (word === 'it') return 'IT';
+      if (word === 'hr') return 'HR';
+      if (word === 'pr') return 'PR';
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    })
     .join(' ');
 }
 
 export function generateCampaignCaption(committee: string): string {
   const formattedCommittee = formatCommitteeForCaption(committee);
-  const article = /^[aeiou]/i.test(formattedCommittee) ? 'an' : 'a';
+  const article = /^(?:[aeiou]|hr\b)/i.test(formattedCommittee) ? 'an' : 'a';
 
   return `I'm thrilled to announce that I've officially joined @Enactus Assiut as ${article} ${formattedCommittee} Beta Member!
 

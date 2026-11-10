@@ -32,6 +32,7 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
     startPosX: number;
     startPosY: number;
   } | null>(null);
+  const rafRef = useRef<number | null>(null);
 
   // Preload template assets once
   useEffect(() => {
@@ -43,6 +44,7 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
     });
     return () => {
       isMounted = false;
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, [template]);
 
@@ -98,27 +100,42 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
   const handlePointerMove = (e: React.PointerEvent) => {
     if (!isDragging || !dragStartRef.current || !canvasRef.current) return;
 
-    const rect = canvasRef.current.getBoundingClientRect();
-    const scaleFactor = template.dimensions.width / rect.width;
+    const clientX = e.clientX;
+    const clientY = e.clientY;
 
-    const deltaX = (e.clientX - dragStartRef.current.startMouseX) * scaleFactor;
-    const deltaY = (e.clientY - dragStartRef.current.startMouseY) * scaleFactor;
-
-    if (dragStartRef.current.mode === 'photo') {
-      onUpdatePosition({
-        ...userData.photoPosition,
-        x: Math.round(dragStartRef.current.startPosX + deltaX),
-        y: Math.round(dragStartRef.current.startPosY + deltaY),
-      });
-    } else if (dragStartRef.current.mode === 'name' && onUpdateNamePosition) {
-      onUpdateNamePosition({
-        x: Math.round(dragStartRef.current.startPosX + deltaX),
-        y: Math.round(dragStartRef.current.startPosY + deltaY),
-      });
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
     }
+
+    rafRef.current = requestAnimationFrame(() => {
+      if (!dragStartRef.current || !canvasRef.current) return;
+
+      const rect = canvasRef.current.getBoundingClientRect();
+      const scaleFactor = template.dimensions.width / rect.width;
+
+      const deltaX = (clientX - dragStartRef.current.startMouseX) * scaleFactor;
+      const deltaY = (clientY - dragStartRef.current.startMouseY) * scaleFactor;
+
+      if (dragStartRef.current.mode === 'photo') {
+        onUpdatePosition({
+          ...userData.photoPosition,
+          x: Math.round(dragStartRef.current.startPosX + deltaX),
+          y: Math.round(dragStartRef.current.startPosY + deltaY),
+        });
+      } else if (dragStartRef.current.mode === 'name' && onUpdateNamePosition) {
+        onUpdateNamePosition({
+          x: Math.round(dragStartRef.current.startPosX + deltaX),
+          y: Math.round(dragStartRef.current.startPosY + deltaY),
+        });
+      }
+    });
   };
 
   const handlePointerUp = (e: React.PointerEvent) => {
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
     if (isDragging) {
       setIsDragging(false);
       dragStartRef.current = null;
