@@ -8,15 +8,19 @@ import { PhotoUploader } from './components/PhotoUploader';
 import { PhotoAdjuster } from './components/PhotoAdjuster';
 import { FormControls } from './components/FormControls';
 import { CaptionBox } from './components/CaptionBox';
+import { ShareModal } from './components/ShareModal';
 import logoEnactusAu from './assets/logoEnactusAu_web.webp';
 import samplePortraitUrl from './assets/sample_portrait.webp';
-import { ArrowRight, ArrowLeft, Check, Download, CheckCircle, RotateCcw } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Check, Download, CheckCircle, RotateCcw, Sparkles } from 'lucide-react';
 
 export const App: React.FC = () => {
   const activeTemplate = VINTAGE_POSTAGE_STAMP_TEMPLATE;
 
   // Active Wizard Step (1: Photo, 2: Details, 3: Export & Share)
   const [currentStep, setCurrentStep] = useState<1 | 2 | 3>(1);
+
+  // Sharing Modal State
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
   // Application State
   const [userData, setUserData] = useState<UserCardData>({
@@ -137,6 +141,8 @@ export const App: React.FC = () => {
       URL.revokeObjectURL(downloadUrl);
 
       setHasExported(true);
+      // Automatically show sharing options modal after card generation
+      setIsShareModalOpen(true);
     } catch (err) {
       console.error('Export error:', err);
       alert('An error occurred while generating your card. Please try again.');
@@ -323,10 +329,27 @@ export const App: React.FC = () => {
                     </button>
                   </div>
 
+                  {/* Persistent Share Action Button */}
+                  <div className="persistent-share-block">
+                    <button
+                      type="button"
+                      className="btn-persistent-share"
+                      onClick={() => setIsShareModalOpen(true)}
+                    >
+                      <Sparkles size={18} className="share-btn-icon" />
+                      <span>SHARE YOUR ANNOUNCEMENT</span>
+                      <ArrowRight size={16} />
+                    </button>
+                    <p className="persistent-share-hint">
+                      Fast 1-click mobile share or guided step-by-step walkthrough
+                    </p>
+                  </div>
+
                   {/* Campaign Caption Box */}
                   <CaptionBox
                     committee={userData.committee}
                     onGetCardBlob={() => exportHighResolutionPng(activeTemplate, userData)}
+                    onOpenShareModal={() => setIsShareModalOpen(true)}
                   />
 
                   {/* Step 3 Navigation Footer */}
@@ -362,6 +385,14 @@ export const App: React.FC = () => {
           <span>Enactus Assiut University &bull; Season 2027</span>
         </div>
       </footer>
+
+      {/* Two-Option Announcement Sharing Modal */}
+      <ShareModal
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
+        committee={userData.committee}
+        onGetCardBlob={() => exportHighResolutionPng(activeTemplate, userData)}
+      />
     </div>
   );
 };

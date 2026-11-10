@@ -5,3 +5,5 @@ dist
 debug.log
 scratch/
 
+
+.vercel

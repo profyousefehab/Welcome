@@ -5,6 +5,7 @@ import { Copy, Check, Share2, Image as ImageIcon } from 'lucide-react';
 interface CaptionBoxProps {
   committee: string;
   onGetCardBlob?: () => Promise<{ blob: Blob; filename: string }>;
+  onOpenShareModal?: () => void;
 }
 
 const LinkedInIcon: React.FC<{ size?: number }> = ({ size = 18 }) => (
@@ -20,7 +21,11 @@ const LinkedInIcon: React.FC<{ size?: number }> = ({ size = 18 }) => (
   </svg>
 );
 
-export const CaptionBox: React.FC<CaptionBoxProps> = ({ committee, onGetCardBlob }) => {
+export const CaptionBox: React.FC<CaptionBoxProps> = ({
+  committee,
+  onGetCardBlob,
+  onOpenShareModal,
+}) => {
   const [copied, setCopied] = useState(false);
   const [isSharing, setIsSharing] = useState(false);
   const [shareNotice, setShareNotice] = useState<string | null>(null);
@@ -150,12 +155,12 @@ export const CaptionBox: React.FC<CaptionBoxProps> = ({ committee, onGetCardBlob
         <button
           type="button"
           className="btn-linkedin-post"
-          onClick={handlePostOnLinkedIn}
+          onClick={onOpenShareModal || handlePostOnLinkedIn}
           disabled={isSharing}
-          title="Shares your card image & caption on LinkedIn"
+          title="Share your card image & caption on LinkedIn"
         >
           <LinkedInIcon size={18} />
-          <span>{isSharing ? 'Preparing Post...' : 'Post on LinkedIn with Photo'}</span>
+          <span>{isSharing ? 'Preparing Post...' : 'Share Announcement on LinkedIn'}</span>
         </button>
 
         <button
