@@ -9,7 +9,7 @@ import { PhotoAdjuster } from './components/PhotoAdjuster';
 import { FormControls } from './components/FormControls';
 import { CaptionBox } from './components/CaptionBox';
 import logoEnactusAu from './assets/logoEnactusAu_web.webp';
-import samplePortraitUrl from './assets/sample_portrait.jpg';
+import samplePortraitUrl from './assets/sample_portrait.webp';
 import { ArrowRight, ArrowLeft, Check, Download, CheckCircle, RotateCcw } from 'lucide-react';
 
 export const App: React.FC = () => {
