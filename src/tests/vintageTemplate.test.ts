@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { VINTAGE_POSTAGE_STAMP_TEMPLATE } from '../templates/vintagePostageTemplate';
 import { renderCardToCanvas } from '../services/renderingEngine';
+import { TemplateLayer } from '../types/template';
 
 describe('Vintage Postage Stamp Template (Card2.psd)', () => {
   it('has 1080x1440 canvas dimensions matching Card2.psd', () => {
@@ -177,6 +178,23 @@ describe('Vintage Postage Stamp Template (Card2.psd)', () => {
     // Expected x = 557 - 6 = 551, y = 1150 + 4 = 1154
     expect(committeeRender?.x).toBe(557 - 6);
     expect(committeeRender?.y).toBe(1150 + 4);
+  });
+
+  it('provides a clean silhouette placeholder without "+ UPLOAD PHOTO" button', () => {
+    const photoLayer = VINTAGE_POSTAGE_STAMP_TEMPLATE.layers.find(
+      (l) => l.type === 'photo'
+    ) as Extract<TemplateLayer, { type: 'photo' }>;
+
+    expect(photoLayer).toBeDefined();
+    expect(photoLayer.slot.placeholderImage).toBeDefined();
+
+    const decodedSvg = decodeURIComponent(photoLayer.slot.placeholderImage!);
+    // Silhouette head & torso must be present
+    expect(decodedSvg).toContain('circle cx="0" cy="-60" r="80"');
+    expect(decodedSvg).toContain('fill="#A89D8C"');
+
+    // "+ UPLOAD PHOTO" badge must be completely removed
+    expect(decodedSvg).not.toContain('UPLOAD PHOTO');
   });
 });
 

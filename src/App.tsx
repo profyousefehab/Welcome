@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { VINTAGE_POSTAGE_STAMP_TEMPLATE } from './templates/vintagePostageTemplate';
 import { UserCardData } from './types/template';
 import { exportHighResolutionPng } from './services/renderingEngine';
@@ -10,7 +10,6 @@ import { FormControls } from './components/FormControls';
 import { CaptionBox } from './components/CaptionBox';
 import { ShareModal } from './components/ShareModal';
 import logoEnactusAu from './assets/logoEnactusAu_web.webp';
-import samplePortraitUrl from './assets/sample_portrait.webp';
 import { ArrowRight, ArrowLeft, Check, Download, CheckCircle, RotateCcw, Sparkles } from 'lucide-react';
 
 export const App: React.FC = () => {
@@ -22,7 +21,7 @@ export const App: React.FC = () => {
   // Sharing Modal State
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
-  // Application State
+  // Application State - Profile photo is optional (null by default, showing silhouette)
   const [userData, setUserData] = useState<UserCardData>({
     photoImage: null,
     photoUrl: null,
@@ -37,24 +36,6 @@ export const App: React.FC = () => {
     committee: '',
     committeePosition: { x: 0, y: 0 },
   });
-
-  // Preload initial sample portrait matching Card2.psd
-  useEffect(() => {
-    const img = new Image();
-    img.onload = () => {
-      setUserData((prev) => {
-        if (!prev.photoImage) {
-          return {
-            ...prev,
-            photoImage: img,
-            photoUrl: samplePortraitUrl,
-          };
-        }
-        return prev;
-      });
-    };
-    img.src = samplePortraitUrl;
-  }, []);
 
   const [isExporting, setIsExporting] = useState(false);
   const [hasExported, setHasExported] = useState(false);

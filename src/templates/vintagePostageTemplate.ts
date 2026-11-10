@@ -18,13 +18,6 @@ const VINTAGE_AVATAR_PLACEHOLDER = `data:image/svg+xml;utf8,${encodeURIComponent
     <circle cx="0" cy="-60" r="80"/>
     <path d="M -150 170 C -150 80 -85 60 0 60 C 85 60 150 80 150 170 Z"/>
   </g>
-
-  <g transform="translate(285, 520)" text-anchor="middle">
-    <rect x="-140" y="-26" width="280" height="52" rx="26" fill="#F4B92B" stroke="#503323" stroke-width="2"/>
-    <text y="7" font-family="'Montserrat', sans-serif" font-size="17" font-weight="800" fill="#503323" letter-spacing="1">
-      + UPLOAD PHOTO
-    </text>
-  </g>
 </svg>
 `)}`;
 

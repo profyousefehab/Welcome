@@ -5,6 +5,7 @@ import {
   Download,
   Copy,
   Check,
+  CheckCircle,
   ArrowRight,
   ArrowLeft,
   Sparkles,
@@ -39,8 +40,9 @@ export const ShareModal: React.FC<ShareModalProps> = ({
   onGetCardBlob,
 }) => {
   const [view, setView] = useState<'options' | 'guided'>('options');
-  const [isQuickSharing, setIsQuickSharing] = useState(false);
-  const [quickShareNotice, setQuickShareNotice] = useState<string | null>(null);
+  const [isPosting, setIsPosting] = useState(false);
+  const [postNotice, setPostNotice] = useState<string | null>(null);
+  const [popupBlocked, setPopupBlocked] = useState(false);
 
   // Guided view state
   const [isDownloadingGuided, setIsDownloadingGuided] = useState(false);
@@ -50,104 +52,104 @@ export const ShareModal: React.FC<ShareModalProps> = ({
   if (!isOpen) return null;
 
   const caption = generateCampaignCaption(committee);
+  const linkedInPostUrl = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(caption)}`;
 
   const copyTextToClipboard = async (text: string): Promise<boolean> => {
     try {
-      await navigator.clipboard.writeText(text);
-      return true;
-    } catch {
-      try {
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        textarea.style.position = 'fixed';
-        textarea.style.opacity = '0';
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
+      if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+        await navigator.clipboard.writeText(text);
         return true;
-      } catch {
-        return false;
       }
+    } catch {
+      // Fall through to textarea execCommand fallback
+    }
+
+    try {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.top = '0';
+      textarea.style.left = '0';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+      const successful = document.execCommand('copy');
+      document.body.removeChild(textarea);
+      return successful;
+    } catch {
+      return false;
     }
   };
 
   const triggerDownload = (blob: Blob, filename: string) => {
-    const downloadUrl = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = downloadUrl;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(downloadUrl);
+    try {
+      const downloadUrl = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
+    } catch (err) {
+      console.error('Download error:', err);
+    }
   };
 
   /**
-   * OPTION 1 — QUICK SHARE (PRIMARY)
-   * Fastest possible mobile sharing experience using Web Share API with files.
-   * Graceful fallback for desktop / unsupported browsers.
+   * OPTION 1 — POST ON LINKEDIN
+   * Single-click flow:
+   * 1. Automatically download generated membership card PNG
+   * 2. Copy complete generated caption to clipboard
+   * 3. Open LinkedIn's post composer in a new tab (prefilled if supported)
+   * 4. Show clear confirmation message
+   * 5. Handle popup, clipboard, and download errors gracefully
+   * *NO device/Android share sheet is used*
    */
-  const handleQuickShare = async () => {
-    setIsQuickSharing(true);
-    setQuickShareNotice(null);
+  const handlePostOnLinkedIn = async () => {
+    setIsPosting(true);
+    setPostNotice(null);
+    setPopupBlocked(false);
 
     try {
+      // 1. Download card PNG
       const { blob, filename } = await onGetCardBlob();
-
-      // Check if file sharing is supported on this device/browser
-      const file = new File([blob], filename, { type: 'image/png' });
-      const canShareFiles =
-        typeof navigator.share === 'function' &&
-        typeof navigator.canShare === 'function' &&
-        navigator.canShare({ files: [file] });
-
-      if (canShareFiles) {
-        try {
-          await navigator.share({
-            title: 'My Enactus Assiut Announcement',
-            text: caption,
-            files: [file],
-          });
-          // Successful opening of share sheet; user handles publishing inside LinkedIn
-          setIsQuickSharing(false);
-          return;
-        } catch (shareErr) {
-          // If the user cancelled/closed the native share sheet, do not show an error
-          if ((shareErr as Error)?.name === 'AbortError') {
-            setIsQuickSharing(false);
-            return;
-          }
-          // Fall through to desktop fallback if native share threw an unexpected error
-        }
-      }
-
-      // Desktop & Unsupported Browser Fallback Flow:
-      // 1. Download the generated PNG
       triggerDownload(blob, filename);
 
-      // 2. Copy the campaign caption to clipboard
+      // 2. Copy caption to clipboard
       await copyTextToClipboard(caption);
 
-      // 3. Open LinkedIn's post composer in a new tab
-      const linkedInPostUrl = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(caption)}`;
+      // 3. Open LinkedIn in new tab
       try {
-        window.open(linkedInPostUrl, '_blank', 'noopener,noreferrer');
+        const win = window.open(linkedInPostUrl, '_blank', 'noopener,noreferrer');
+        if (!win || win.closed || typeof win.closed === 'undefined') {
+          setPopupBlocked(true);
+        }
       } catch {
-        // Handled popup restrictions gracefully
+        setPopupBlocked(true);
       }
 
-      // 4. Show clear guidance instruction
-      setQuickShareNotice(
-        'Card downloaded & caption copied! On LinkedIn, attach your downloaded card image and paste the caption.'
+      // 4. Set confirmation message
+      setPostNotice(
+        'Your card is downloaded and your caption is copied! Attach your image, make sure to tag @Enactus Assiut, and publish your post.'
       );
     } catch (err) {
-      console.error('Quick share error:', err);
-      // Graceful fallback
+      console.error('Post on LinkedIn error:', err);
       await copyTextToClipboard(caption);
-      setQuickShareNotice('Caption copied to clipboard. Please open LinkedIn to share your announcement.');
+      try {
+        const win = window.open(linkedInPostUrl, '_blank', 'noopener,noreferrer');
+        if (!win || win.closed || typeof win.closed === 'undefined') {
+          setPopupBlocked(true);
+        }
+      } catch {
+        setPopupBlocked(true);
+      }
+      setPostNotice(
+        'Your card is downloaded and your caption is copied! Attach your image, make sure to tag @Enactus Assiut, and publish your post.'
+      );
     } finally {
-      setIsQuickSharing(false);
+      setIsPosting(false);
     }
   };
 
@@ -178,7 +180,6 @@ export const ShareModal: React.FC<ShareModalProps> = ({
   };
 
   const handleOpenLinkedInPublish = () => {
-    const linkedInPostUrl = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(caption)}`;
     window.open(linkedInPostUrl, '_blank', 'noopener,noreferrer');
   };
 
@@ -215,39 +216,99 @@ export const ShareModal: React.FC<ShareModalProps> = ({
         {/* View 1: Main Two-Option Chooser */}
         {view === 'options' && (
           <div className="share-options-container">
-            {/* OPTION 1: QUICK SHARE */}
+            {/* OPTION 1: POST ON LINKEDIN */}
             <div className="share-option-card is-recommended">
               <div className="share-option-top">
                 <span className="recommended-pill">Recommended</span>
                 <span className="option-number">Option 1</span>
               </div>
-              <h3 className="share-option-title">QUICK SHARE</h3>
-              <p className="share-option-desc">
-                Share your card and caption using your device&apos;s native sharing options.
-              </p>
+              <h3 className="share-option-title">POST ON LINKEDIN</h3>
 
-              {quickShareNotice && (
-                <div className="share-notice-box" role="status">
-                  <Info size={16} className="notice-icon" />
-                  <span>{quickShareNotice}</span>
+              {/* Explainer Box Before Clicking */}
+              <div className="share-explainer-card">
+                <div className="explainer-intro">
+                  <h4 className="explainer-heading">Ready to announce your journey?</h4>
+                  <p className="explainer-lead">
+                    We&apos;ll download your membership card, copy your caption, and open LinkedIn for you.
+                  </p>
+                </div>
+
+                <div className="explainer-steps-box">
+                  <span className="explainer-steps-label">Once LinkedIn opens:</span>
+                  <ol className="explainer-steps-list">
+                    <li className="explainer-step-item">
+                      <span className="step-item-num">1</span>
+                      <span className="step-item-text">Attach your downloaded membership card.</span>
+                    </li>
+                    <li className="explainer-step-item">
+                      <span className="step-item-num">2</span>
+                      <span className="step-item-text">Paste your caption if it isn&apos;t already there.</span>
+                    </li>
+                    <li className="explainer-step-item is-mention-highlight">
+                      <span className="step-item-num mention-badge">3</span>
+                      <div className="step-item-text">
+                        <strong className="mention-strong">Don&apos;t forget to mention @Enactus Assiut!</strong>
+                        <span className="mention-subtext">
+                          Type <span className="mention-tag-pill">@Enactus Assiut</span> and select the official page from LinkedIn&apos;s suggestions.
+                        </span>
+                      </div>
+                    </li>
+                    <li className="explainer-step-item">
+                      <span className="step-item-num">4</span>
+                      <span className="step-item-text">Publish your announcement!</span>
+                    </li>
+                  </ol>
+                </div>
+              </div>
+
+              {/* Confirmation Message Display */}
+              {postNotice && (
+                <div className="share-confirmation-box" role="status">
+                  <CheckCircle size={18} className="confirmation-icon" />
+                  <div className="confirmation-content">
+                    <p className="confirmation-text">{postNotice}</p>
+                    {popupBlocked && (
+                      <a
+                        href={linkedInPostUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-popup-fallback"
+                      >
+                        <ExternalLink size={13} />
+                        <span>Click here to open LinkedIn if it didn&apos;t open automatically</span>
+                      </a>
+                    )}
+                  </div>
                 </div>
               )}
 
+              {/* Main Action Button */}
               <button
                 type="button"
                 className="btn-share-primary"
-                onClick={handleQuickShare}
-                disabled={isQuickSharing}
+                onClick={handlePostOnLinkedIn}
+                disabled={isPosting}
               >
                 <LinkedInIcon size={20} />
-                <span>{isQuickSharing ? 'Preparing Announcement...' : 'SHARE ON LINKEDIN'}</span>
+                <span>{isPosting ? 'Preparing Announcement...' : 'POST ON LINKEDIN'}</span>
               </button>
 
-              <div className="share-option-footnote">
+              {/* Helpful Note Below Main Button */}
+              <div className="share-help-note">
                 <p>
-                  On supported mobile devices, choose LinkedIn from your device&apos;s share sheet to review and publish.
-                  On desktop, your card downloads and caption copies automatically.
+                  Need help attaching your card or tagging our page? Check{' '}
+                  <button
+                    type="button"
+                    className="inline-guide-btn"
+                    onClick={() => setView('guided')}
+                  >
+                    Guided Sharing
+                  </button>{' '}
+                  below for step-by-step instructions.
                 </p>
+              </div>
+
+              <div className="share-option-footnote">
                 <a
                   href={ENACTUS_LINKEDIN_URL}
                   target="_blank"

@@ -65,30 +65,6 @@ export const CaptionBox: React.FC<CaptionBoxProps> = ({
         cardFilename = result.filename;
       }
 
-      // Check if native Web Share API supports file sharing (mobile / supported browsers)
-      if (cardBlob && typeof navigator.share === 'function') {
-        const file = new File([cardBlob], cardFilename, { type: 'image/png' });
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          try {
-            await navigator.share({
-              title: 'Enactus Assiut Membership Card',
-              text: caption,
-              files: [file],
-            });
-            setIsSharing(false);
-            return;
-          } catch (err) {
-            // If user aborted/dismissed the share sheet, stop cleanly
-            if ((err as Error)?.name === 'AbortError') {
-              setIsSharing(false);
-              return;
-            }
-            // Otherwise, fall through to browser desktop sharing method
-          }
-        }
-      }
-
-      // Desktop / Browser Fallback Flow:
       // 1. Auto-download the card image so the user has the PNG ready to attach
       if (cardBlob) {
         const downloadUrl = URL.createObjectURL(cardBlob);

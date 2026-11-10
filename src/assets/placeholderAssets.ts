@@ -169,14 +169,6 @@ export const PLACEHOLDER_DEFAULT_AVATAR_SVG = svgToDataUri(`
     <circle cx="0" cy="-60" r="90"/>
     <path d="M -180 180 C -180 80 -100 60 0 60 C 100 60 180 80 180 180 Z"/>
   </g>
-
-  <!-- Upload Guide Badge -->
-  <g transform="translate(400, 520)" text-anchor="middle">
-    <rect x="-160" y="-30" width="320" height="60" rx="30" fill="#FFC20E" fill-opacity="0.15" stroke="#FFC20E" stroke-width="2"/>
-    <text y="7" font-family="'Montserrat', sans-serif" font-size="20" font-weight="700" fill="#FFC20E" letter-spacing="1">
-      + UPLOAD PHOTO
-    </text>
-  </g>
 </svg>
 `);
 

@@ -1907,15 +1907,9 @@ button.step-pill.is-active .step-pill-title {
 
 /* Two Options Layout */
 .share-options-container {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 1.25rem;
-}
-
-@media (min-width: 600px) {
-  .share-options-container {
-    grid-template-columns: 1fr 1fr;
-  }
 }
 
 .share-option-card {
@@ -1973,7 +1967,7 @@ button.step-pill.is-active .step-pill-title {
   font-family: 'SF Pro Display Bold Italic', sans-serif;
   font-size: 1.15rem;
   font-weight: 800;
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.75rem;
   color: #FFFFFF;
 }
 
@@ -1983,6 +1977,216 @@ button.step-pill.is-active .step-pill-title {
   line-height: 1.5;
   margin: 0 0 1.25rem;
   flex: 1;
+}
+
+/* Explainer Box Before Clicking */
+.share-explainer-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1.1rem;
+  margin-bottom: 1.25rem;
+}
+
+.explainer-intro {
+  margin-bottom: 0.85rem;
+}
+
+.explainer-heading {
+  font-family: 'SF Pro Display Bold', sans-serif;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0 0 0.3rem;
+}
+
+.explainer-lead {
+  font-size: 0.85rem;
+  color: #94A3B8;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.explainer-steps-box {
+  background: rgba(7, 15, 43, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 0.85rem 0.95rem;
+}
+
+.explainer-steps-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-gold-warm);
+  margin-bottom: 0.65rem;
+}
+
+.explainer-steps-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.explainer-step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: #E2E8F0;
+}
+
+.step-item-num {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+.step-item-text {
+  flex: 1;
+}
+
+/* Visually Noticeable Mention Reminder (Requirement 2) */
+.explainer-step-item.is-mention-highlight {
+  background: linear-gradient(90deg, rgba(255, 194, 14, 0.14) 0%, rgba(255, 194, 14, 0.05) 100%);
+  border: 1.5px solid rgba(255, 194, 14, 0.45);
+  border-left: 4px solid #FFC20E;
+  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+  margin: 0.15rem 0;
+}
+
+.explainer-step-item.is-mention-highlight .mention-badge {
+  background: #FFC20E;
+  color: #070F2B;
+  font-weight: 800;
+}
+
+.mention-strong {
+  display: block;
+  color: #FFC20E;
+  font-size: 0.86rem;
+  font-weight: 800;
+  margin-bottom: 0.2rem;
+}
+
+.mention-subtext {
+  display: block;
+  font-size: 0.8rem;
+  color: #CBD5E1;
+  line-height: 1.4;
+}
+
+.mention-tag-pill {
+  display: inline-block;
+  background: #0A66C2;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 0.78rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
+  margin: 0 0.2rem;
+  box-shadow: 0 2px 6px rgba(10, 102, 194, 0.35);
+}
+
+/* Confirmation Message Box */
+.share-confirmation-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1.5px solid rgba(16, 185, 129, 0.45);
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  margin-bottom: 1rem;
+  animation: fadeInStep 0.25s ease-out;
+}
+
+.confirmation-icon {
+  color: #10B981;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.confirmation-content {
+  flex: 1;
+}
+
+.confirmation-text {
+  color: #A7F3D0;
+  font-size: 0.84rem;
+  line-height: 1.45;
+  margin: 0;
+  font-weight: 600;
+}
+
+.btn-popup-fallback {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+  background: #0A66C2;
+  color: #FFFFFF;
+  padding: 0.35rem 0.7rem;
+  border-radius: 6px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.btn-popup-fallback:hover {
+  background: #004182;
+}
+
+/* Helpful Note Below Main Button */
+.share-help-note {
+  margin-top: 0.9rem;
+  padding: 0.65rem 0.85rem;
+  background: rgba(255, 255, 255, 0.025);
+  border-radius: 8px;
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+}
+
+.share-help-note p {
+  margin: 0;
+  font-size: 0.78rem;
+  color: #94A3B8;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.inline-guide-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-gold-warm);
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-size: inherit;
+  font-family: inherit;
+  transition: color 0.2s;
+}
+
+.inline-guide-btn:hover {
+  color: #FFE082;
 }
 
 .share-notice-box {
