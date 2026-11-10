@@ -1,21 +1,36 @@
 /**
  * Official Campaign Announcement Copy
  * 
- * Standardized announcement text for all incoming members.
- * Free of emojis and excessive hype.
+ * Standardized announcement text for incoming Enactus Assiut Beta Members.
  */
 
-export function generateCampaignCaption(committee: string): string {
+export const ENACTUS_LINKEDIN_URL = 'https://www.linkedin.com/company/enactus-assiut/';
+
+export function formatCommitteeForCaption(committee: string): string {
   const raw = committee?.trim() || 'Enactus Team';
-  const formattedCommittee = /committee$/i.test(raw) || /team$/i.test(raw)
-    ? raw
-    : `${raw} Committee`;
-  
-  return `I am pleased to announce that I have officially joined Enactus Assiut University as a member of the ${formattedCommittee}.
+  if (raw.toUpperCase() === 'IT') return 'IT';
 
-Together with an inspiring team of changemakers, we are dedicated to creating positive social and economic impact through innovation, entrepreneurial action, and community empowerment.
+  const clean = raw.replace(/\s+committee$/i, '');
+  return clean
+    .toLowerCase()
+    .split(' ')
+    .map((word) => (word === 'it' ? 'IT' : word.charAt(0).toUpperCase() + word.slice(1)))
+    .join(' ');
+}
 
-Looking forward to a productive season of leadership and meaningful initiatives.
+export function generateCampaignCaption(committee: string): string {
+  const formattedCommittee = formatCommitteeForCaption(committee);
+  const article = /^[aeiou]/i.test(formattedCommittee) ? 'an' : 'a';
 
-#WeAreEnactus #EnactusEgypt #EnactusAU #Leadership #SocialImpact #CommunityEmpowerment`;
+  return `I'm thrilled to announce that I've officially joined @Enactus Assiut as ${article} ${formattedCommittee} Beta Member!
+
+This is more than just joining a team; it's an opportunity to grow, challenge myself, develop new skills, and contribute to something bigger.
+
+I'm looking forward to an incredible journey filled with learning, collaboration, unforgettable experiences, and positive change.
+
+The journey starts now. ⚡
+
+${ENACTUS_LINKEDIN_URL}
+
+#Enactusau #Enactusassiut #Enactus #NewBeginnings #NewMember #Leadership #Teamwork #MakingAnImpact`;
 }
