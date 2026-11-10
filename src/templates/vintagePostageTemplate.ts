@@ -97,11 +97,11 @@ export const VINTAGE_POSTAGE_STAMP_TEMPLATE: TemplateConfig = {
       type: 'overlay',
       zIndex: 35,
       source: sealStampUrl,
-      x: 668,
-      y: 752,
-      width: 386,
-      height: 343,
-      opacity: 0.86,
+      x: 726,
+      y: 800,
+      width: 245,
+      height: 248,
+      opacity: 1.0,
       blendMode: 'source-over',
     },
 
@@ -113,12 +113,12 @@ export const VINTAGE_POSTAGE_STAMP_TEMPLATE: TemplateConfig = {
       zIndex: 40,
       role: 'name',
       config: {
-        x: 556,
-        y: 1078,
+        x: 557,
+        y: 1079,
         align: 'center',
         fontFamily: "'SF Pro Display Bold Italic', 'SFProDisplay-BoldItalic', 'SF Pro Display', sans-serif",
         fontStyle: 'italic',
-        fontSize: 80, // Matches Card2.psd typography
+        fontSize: 78, // Exact Card2.psd updated size
         fontWeight: 700,
         color: '#FFFFFF',
         letterSpacing: 0.5,
@@ -137,12 +137,12 @@ export const VINTAGE_POSTAGE_STAMP_TEMPLATE: TemplateConfig = {
       zIndex: 45,
       role: 'committee',
       config: {
-        x: 556,
+        x: 557,
         y: 1150,
         align: 'center',
         fontFamily: "'SF Pro Display Bold Italic', 'SFProDisplay-BoldItalic', 'SF Pro Display', sans-serif",
         fontStyle: 'italic',
-        fontSize: 38, // Matches Card2.psd typography
+        fontSize: 34, // Exact Card2.psd updated size
         fontWeight: 700,
         color: '#503323', // Deep rustic brown from Card2.psd
         letterSpacing: 1,

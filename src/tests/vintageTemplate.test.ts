@@ -32,8 +32,10 @@ describe('Vintage Postage Stamp Template (Card2.psd)', () => {
     const stamp = overlays.find((o) => o.name.includes('Seal'));
     expect(stamp).toBeDefined();
     if (stamp && stamp.type === 'overlay') {
-      expect(stamp.x).toBe(668);
-      expect(stamp.y).toBe(752);
+      expect(stamp.x).toBe(726);
+      expect(stamp.y).toBe(800);
+      expect(stamp.width).toBe(245);
+      expect(stamp.height).toBe(248);
     }
 
     const committeeOverlay = overlays.find((o) => o.id === 'layer-committee-overlay');
@@ -147,7 +149,7 @@ describe('Vintage Postage Stamp Template (Card2.psd)', () => {
       height: 0,
     } as unknown as HTMLCanvasElement;
 
-    // Default template coordinates: name is at (556, 1078), committee is at (556, 1150)
+    // Default template coordinates: name is at (557, 1079), committee is at (557, 1150)
     renderCardToCanvas(
       mockCanvas,
       VINTAGE_POSTAGE_STAMP_TEMPLATE,
@@ -166,14 +168,14 @@ describe('Vintage Postage Stamp Template (Card2.psd)', () => {
 
     const nameRender = filledTexts.find((t) => t.text.toLowerCase().includes('offset student'));
     expect(nameRender).toBeDefined();
-    // Expected x = 556 + 12 = 568, y = 1078 - 8 = 1070
-    expect(nameRender?.x).toBe(556 + 12);
-    expect(nameRender?.y).toBe(1078 - 8);
+    // Expected x = 557 + 12 = 569, y = 1079 - 8 = 1071
+    expect(nameRender?.x).toBe(557 + 12);
+    expect(nameRender?.y).toBe(1079 - 8);
 
     const committeeRender = filledTexts.find((t) => t.text.includes('SOCIAL MEDIA'));
     expect(committeeRender).toBeDefined();
-    // Expected x = 556 - 6 = 550, y = 1150 + 4 = 1154
-    expect(committeeRender?.x).toBe(556 - 6);
+    // Expected x = 557 - 6 = 551, y = 1150 + 4 = 1154
+    expect(committeeRender?.x).toBe(557 - 6);
     expect(committeeRender?.y).toBe(1150 + 4);
   });
 });
